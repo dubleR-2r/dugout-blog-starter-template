@@ -2,49 +2,420 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import SubscribeForm from '../components/SubscribeForm.astro';
+import {
+	SITE_TITLE,
+	SITE_TAGLINE,
+	SITE_DESCRIPTION,
+	LEGAL_ENTITY,
+	PLAN_NAME,
+	PRICE_AMOUNT,
+	PRICE_INTERVAL,
+	LAUNCH_OFFER,
+} from '../consts';
+
+const steps = [
+	{
+		n: '1',
+		title: 'Monitor',
+		body: 'Automated watchers track EDGAR filings (8-Ks, 10-Qs, 13-Fs, and more) and vetted news feeds around the clock.',
+	},
+	{
+		n: '2',
+		title: 'Filter & decode',
+		body: 'Filings are sorted by item type and materiality — a §1.01 material agreement isn’t a §5.02 board reshuffle — and summarized in one or two plain-English lines with a direct link to the source document.',
+	},
+	{
+		n: '3',
+		title: 'Deliver',
+		body: 'One clean digest in your inbox. No terminal, no tab-hoarding, no doomscrolling. Read it in five minutes; go deeper only where it’s warranted.',
+	},
+];
+
+const planFeatures = [
+	'Daily market-wide digest of notable filings',
+	'Curated news headlines with source links',
+	'Plain-English materiality notes',
+	'Cancel anytime',
+];
+
+const faqs = [
+	{
+		q: 'Is The Weekend Dugout stock picks or trade alerts?',
+		a: 'No — and deliberately so. The Weekend Dugout tells you what happened and why it’s material. What you do with it is your decision. We report facts and context, never buy/sell calls.',
+	},
+	{
+		q: 'Isn’t EDGAR free?',
+		a: 'Completely — and you’re welcome to read a few thousand filings a day yourself. You’re not paying for the data; you’re paying for the filtering, the plain-English decoding, and the five-minute format.',
+	},
+	{
+		q: 'How fast are alerts?',
+		a: 'Digest items arrive daily. We never guarantee timeliness — original sources always control — but the automation doesn’t sleep.',
+	},
+	{
+		q: 'Can I cancel?',
+		a: 'Anytime, one click, effective at the end of your billing period. No calls, no guilt trips.',
+	},
+	{
+		q: 'Do you provide investment advice?',
+		a: 'No. This is an informational service. See the full disclaimer below and our Terms of Service.',
+	},
+];
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={`${SITE_TITLE} — ${SITE_TAGLINE}`} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
-		<Header />
+		<Header home />
+
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<!-- Hero -->
+			<section class="hero">
+				<div class="wrap">
+					<p class="eyebrow">{SITE_TAGLINE}</p>
+					<h1>The filings that move markets, decoded before you&rsquo;ve finished your coffee.</h1>
+					<p class="lede">
+						Every 8-K, every material disclosure, every headline that matters — filtered, summarized
+						in plain English, and delivered to your inbox. Built by a trader who got tired of finding
+						out last.
+					</p>
+					<div class="hero-form">
+						<SubscribeForm cta={`Start for ${PRICE_AMOUNT}/mo`} />
+					</div>
+					<p class="secondary-cta">
+						<a href="/sample">See a sample digest →</a>
+					</p>
+					{
+						LAUNCH_OFFER && (
+							<p class="offer">
+								<strong>{LAUNCH_OFFER.text}</strong> — {LAUNCH_OFFER.deadline}.
+							</p>
+						)
+					}
+				</div>
+			</section>
+
+			<!-- The problem -->
+			<section id="problem" class="band">
+				<div class="wrap narrow">
+					<p class="eyebrow">The problem</p>
+					<h2>The information is public. The edge is in the filtering.</h2>
+					<p>
+						Every trading day, thousands of filings hit SEC EDGAR. A handful are material: the
+						surprise CEO exit, the amended credit agreement, the 8-K quietly disclosing a lost
+						customer. The rest is noise. Institutions pay teams to read them the moment they land.
+						Retail traders find out when it&rsquo;s already in the price.
+					</p>
+					<p>
+						{SITE_TITLE} closes that gap with automation: continuous EDGAR monitoring, materiality filtering,
+						and a plain-English digest that tells you what was filed, why it matters, and where to read
+						the original — plus a curated stream of market news headlines so the context arrives with
+						the catalyst.
+					</p>
+				</div>
+			</section>
+
+			<!-- How it works -->
+			<section id="how" class="band alt">
+				<div class="wrap">
+					<p class="eyebrow">How it works</p>
+					<h2>Three moving parts.</h2>
+					<div class="cards">
+						{
+							steps.map((step) => (
+								<article class="card">
+									<p class="tag">{step.n}</p>
+									<h3>{step.title}</h3>
+									<p>{step.body}</p>
+								</article>
+							))
+						}
+					</div>
+				</div>
+			</section>
+
+			<!-- Pricing -->
+			<section id="pricing" class="band">
+				<div class="wrap">
+					<div id="subscribe" class="pricing">
+						<div>
+							<p class="eyebrow">Pricing</p>
+							<h2>One plan. Cancel anytime.</h2>
+							<p class="lede">
+								Enter your email and you&rsquo;ll be taken to Stripe to complete checkout. The digest
+								starts on the next scheduled delivery.
+							</p>
+							<SubscribeForm cta="Continue to checkout" />
+						</div>
+						<aside class="price-card">
+							<p class="plan">{PLAN_NAME}</p>
+							<p class="amount">{PRICE_AMOUNT}<span>{PRICE_INTERVAL}</span></p>
+							<ul>
+								{planFeatures.map((feature) => <li>{feature}</li>)}
+							</ul>
+							{
+								LAUNCH_OFFER && (
+									<p class="offer-note">
+										{LAUNCH_OFFER.text} — {LAUNCH_OFFER.deadline}. Apply the code at checkout.
+									</p>
+								)
+							}
+							<p class="secured">Payments handled securely by Stripe.</p>
+						</aside>
+					</div>
+				</div>
+			</section>
+
+			<!-- Credibility -->
+			<section id="about" class="band alt">
+				<div class="wrap narrow">
+					<p class="eyebrow">Who builds this</p>
+					<h2>Built by a practitioner, not a content farm.</h2>
+					<p>
+						{SITE_TITLE} is a product of {LEGAL_ENTITY}, built by a software engineer and active trader
+						who wanted one thing: the material facts, fast, without the noise. The same automation that
+						powers his own process now powers yours.
+					</p>
+				</div>
+			</section>
+
+			<!-- FAQ -->
+			<section id="faq" class="band">
+				<div class="wrap narrow">
+					<p class="eyebrow">FAQ</p>
+					<h2>Questions.</h2>
+					<div class="faq">
+						{
+							faqs.map((item) => (
+								<details>
+									<summary>{item.q}</summary>
+									<p>{item.a}</p>
+								</details>
+							))
+						}
+					</div>
+				</div>
+			</section>
 		</main>
+
 		<Footer />
 	</body>
 </html>
+
+<style>
+	/* Hero */
+	.hero {
+		position: relative;
+		padding: 6rem 0 5rem;
+		overflow: hidden;
+	}
+	.hero::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background:
+			radial-gradient(60ch 40ch at 15% -10%, rgba(77, 159, 255, 0.16), transparent 70%),
+			radial-gradient(50ch 40ch at 85% 0%, rgba(52, 211, 153, 0.08), transparent 70%);
+		pointer-events: none;
+	}
+	.hero .wrap {
+		position: relative;
+	}
+	.hero h1 {
+		margin-bottom: 1.25rem;
+		max-width: 18ch;
+	}
+	.hero-form {
+		margin-top: 2rem;
+	}
+	.secondary-cta {
+		margin: 1rem 0 0;
+		font-size: 0.9rem;
+	}
+	.offer {
+		display: inline-block;
+		margin: 2rem 0 0;
+		padding: 0.6rem 1rem;
+		font-size: 0.85rem;
+		color: var(--text-muted);
+		background: rgba(52, 211, 153, 0.07);
+		border: 1px solid rgba(52, 211, 153, 0.25);
+		border-radius: 8px;
+	}
+	.offer strong {
+		color: var(--signal);
+	}
+
+	/* Bands */
+	.band {
+		padding: 5rem 0;
+		border-top: 1px solid var(--border);
+	}
+	.band.alt {
+		background: var(--bg-elevated);
+	}
+	.band h2 {
+		margin-bottom: 1.5rem;
+	}
+	.narrow {
+		max-width: 68ch;
+	}
+	.narrow p {
+		color: var(--text-muted);
+	}
+
+	/* How it works */
+	.cards {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		gap: 1.25rem;
+		margin-top: 2.5rem;
+	}
+	.card {
+		padding: 1.75rem;
+		background: var(--bg-panel);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+	}
+	.card .tag {
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		color: var(--signal);
+		margin-bottom: 0.75rem;
+	}
+	.card h3 {
+		margin-bottom: 0.6rem;
+	}
+	.card p:last-child {
+		margin: 0;
+		font-size: 0.95rem;
+		color: var(--text-muted);
+	}
+
+	/* Pricing */
+	.pricing {
+		display: grid;
+		grid-template-columns: 1.2fr 0.8fr;
+		gap: 3rem;
+		align-items: start;
+	}
+	.pricing .lede {
+		margin-bottom: 2rem;
+	}
+	.price-card {
+		padding: 2rem;
+		background: var(--bg-panel);
+		border: 1px solid var(--border-bright);
+		border-radius: var(--radius);
+	}
+	.plan {
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--accent);
+		margin-bottom: 0.75rem;
+	}
+	.amount {
+		font-size: 2.75rem;
+		font-weight: 700;
+		color: #fff;
+		line-height: 1;
+		margin-bottom: 1.5rem;
+	}
+	.amount span {
+		display: block;
+		font-size: 0.85rem;
+		font-weight: 400;
+		color: var(--text-dim);
+		margin-top: 0.5rem;
+	}
+	.price-card ul {
+		list-style: none;
+		margin: 0 0 1.5rem;
+		padding: 0;
+		font-size: 0.9rem;
+		color: var(--text-muted);
+	}
+	.price-card li {
+		padding: 0.5rem 0 0.5rem 1.5rem;
+		position: relative;
+		border-top: 1px solid var(--border);
+	}
+	.price-card li::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 1.05rem;
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--signal);
+	}
+	.offer-note {
+		font-size: 0.8rem;
+		color: var(--signal);
+		margin-bottom: 1rem;
+	}
+	.secured {
+		margin: 0;
+		font-size: 0.78rem;
+		color: var(--text-dim);
+	}
+
+	/* FAQ */
+	.faq {
+		border-top: 1px solid var(--border);
+	}
+	details {
+		border-bottom: 1px solid var(--border);
+	}
+	summary {
+		padding: 1.1rem 0;
+		font-weight: 700;
+		font-size: 1rem;
+		color: var(--text);
+		cursor: pointer;
+		list-style: none;
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		align-items: center;
+	}
+	summary::-webkit-details-marker {
+		display: none;
+	}
+	summary::after {
+		content: '+';
+		font-family: var(--font-mono);
+		color: var(--accent);
+		flex: none;
+	}
+	details[open] summary::after {
+		content: '−';
+	}
+	details p {
+		margin: 0 0 1.25rem;
+		font-size: 0.95rem;
+		color: var(--text-muted);
+		max-width: 70ch;
+	}
+
+	@media (max-width: 860px) {
+		.pricing {
+			grid-template-columns: 1fr;
+			gap: 2.5rem;
+		}
+	}
+	@media (max-width: 720px) {
+		.hero {
+			padding: 4rem 0 3.5rem;
+		}
+		.band {
+			padding: 3.5rem 0;
+		}
+	}
+</style>

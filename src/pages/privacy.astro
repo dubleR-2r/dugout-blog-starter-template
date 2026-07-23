@@ -1,0 +1,159 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, LEGAL_ENTITY, CONTACT_EMAIL, EFFECTIVE_DATE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={`Privacy Policy — ${SITE_TITLE}`}
+			description={`How ${SITE_TITLE} handles subscriber data.`}
+		/>
+	</head>
+	<body>
+		<Header />
+
+		<main class="wrap">
+			<article class="prose">
+				<h1>Privacy Policy</h1>
+				<p class="updated">Effective date: {EFFECTIVE_DATE}</p>
+
+				<p>
+					This policy explains what {LEGAL_ENTITY}, trading as {SITE_TITLE} (&ldquo;we,&rdquo;
+					&ldquo;us&rdquo;), collects from subscribers to The Weekend Dugout (the
+					&ldquo;Service&rdquo;), why we collect it, and who else touches it. It should be read
+					alongside our <a href="/terms">Terms of Service</a>.
+				</p>
+
+				<h2>1. What we collect</h2>
+				<p>We collect only what is needed to bill you and deliver the digest:</p>
+				<ul>
+					<li>
+						<strong>Email address.</strong> Provided by you at signup and used as your delivery
+						address and account identifier.
+					</li>
+					<li>
+						<strong>Subscription status.</strong> Whether your subscription is active, past due, or
+						cancelled, and the associated billing period.
+					</li>
+					<li>
+						<strong>Delivery events.</strong> Standard email operational data such as whether a
+						message was delivered, bounced, or unsubscribed.
+					</li>
+				</ul>
+				<p>
+					<strong>We do not collect or store your payment card details.</strong> Card data is entered
+					directly with Stripe and never reaches our systems.
+				</p>
+
+				<h2>2. What we do not do</h2>
+				<ul>
+					<li>We do not sell, rent, or trade subscriber email addresses.</li>
+					<li>We do not share your address with advertisers or list brokers.</li>
+					<li>We do not use your data to build profiles for third-party marketing.</li>
+				</ul>
+
+				<h2>3. Service providers</h2>
+				<p>
+					We rely on third-party processors to operate the Service. Each handles your data under its
+					own privacy terms:
+				</p>
+				<ul>
+					<li>
+						<strong>Stripe</strong> — payment processing, subscription management, and tax
+						calculation. Stripe is the system of record for billing and holds your payment details.
+					</li>
+					<li>
+						<strong>Make.com</strong> — the automation platform that assembles and triggers digest
+						delivery.
+					</li>
+					<li>
+						<strong>Our email delivery provider</strong> — transmits the digest to your inbox.
+					</li>
+					<li>
+						<strong>Cloudflare</strong> — hosts this website and provides standard network security
+						and abuse protection.
+					</li>
+				</ul>
+				<p>
+					We may add or change providers as the Service evolves and will update this policy when we
+					do.
+				</p>
+
+				<h2>4. Automated content generation</h2>
+				<p>
+					Digest content is produced with automated systems, including AI models that summarize and
+					classify public filings. These systems process the <em>filings</em>, not your personal
+					data. Your email address is not included in prompts sent to any AI provider.
+				</p>
+
+				<h2>5. Website analytics and cookies</h2>
+				<p>
+					This site does not set advertising or tracking cookies and does not run third-party
+					analytics. Our host may log standard request data (IP address, user agent, timestamp) for
+					security and abuse prevention. If we add analytics later, we will update this policy first.
+				</p>
+
+				<h2>6. Retention</h2>
+				<p>
+					We keep your email address for as long as your subscription is active. After cancellation,
+					we retain it only as long as needed for records, tax, and dispute-resolution purposes, and
+					then delete it. Billing records held by Stripe are retained per Stripe&rsquo;s own schedule
+					and applicable financial recordkeeping law.
+				</p>
+
+				<h2>7. Your choices</h2>
+				<ul>
+					<li>
+						<strong>Unsubscribe</strong> from delivery using the link in the footer of any issue.
+					</li>
+					<li>
+						<strong>Cancel billing</strong> at any time; access continues through the period already
+						paid, per the <a href="/terms">Terms of Service</a>.
+					</li>
+					<li>
+						<strong>Request access or deletion</strong> of the personal data we hold by emailing us
+						at the address below. We will respond within a reasonable period.
+					</li>
+				</ul>
+
+				<h2>8. Security</h2>
+				<p>
+					We limit stored personal data to the minimum described above and rely on established
+					providers for payment and delivery infrastructure. No method of transmission or storage is
+					perfectly secure, and we cannot guarantee absolute security.
+				</p>
+
+				<h2>9. Children</h2>
+				<p>
+					The Service is not directed to anyone under 18, and we do not knowingly collect data from
+					children.
+				</p>
+
+				<h2>10. Changes</h2>
+				<p>
+					We may update this policy; material changes will be communicated via the Service. Continued
+					use after the effective date constitutes acceptance.
+				</p>
+
+				<h2>11. Contact</h2>
+				<p>
+					{LEGAL_ENTITY} · 11907 Sun Valley Drive, Fort Washington, MD 20744 ·
+					<a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+				</p>
+			</article>
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.prose p,
+	.prose li {
+		font-size: 0.95rem;
+	}
+</style>

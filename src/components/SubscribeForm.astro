@@ -1,0 +1,123 @@
+---
+import { STRIPE_PAYMENT_LINK, CHECKOUT_READY, PREVIEW_NOTICE } from '../consts';
+
+interface Props {
+	/** Label on the submit button. */
+	cta?: string;
+	/** Show the fine print under the form. */
+	note?: boolean;
+}
+const { cta = 'Subscribe', note = true } = Astro.props;
+
+// A stable id so the label/input pair stays unique across form instances.
+const fieldId = `email-${cta.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}`;
+---
+
+<form
+	class="subscribe"
+	data-stripe-link={CHECKOUT_READY ? STRIPE_PAYMENT_LINK : undefined}
+	data-checkout-ready={String(CHECKOUT_READY)}
+	novalidate
+>
+	<label class="sr-only" for={fieldId}>Email address</label>
+	<input
+		id={fieldId}
+		type="email"
+		name="email"
+		placeholder="you@company.com"
+		autocomplete="email"
+		required
+		disabled={!CHECKOUT_READY}
+	/>
+	<button class="btn" type="submit" disabled={!CHECKOUT_READY}>{cta}</button>
+	<p class="error" role="alert" hidden></p>
+	{
+		CHECKOUT_READY
+			? note && (
+					<p class="fine">
+						You'll be taken to Stripe to complete checkout. By subscribing you agree to the{' '}
+						<a href="/terms">Terms of Service</a>.
+					</p>
+				)
+			: <p class="preview">{PREVIEW_NOTICE}</p>
+	}
+</form>
+
+<style>
+	.subscribe {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: 0.6rem;
+		max-width: 480px;
+	}
+	.error,
+	.fine,
+	.preview {
+		grid-column: 1 / -1;
+		margin: 0.25rem 0 0;
+		font-size: 0.8rem;
+		line-height: 1.5;
+	}
+	.error {
+		color: #f87171;
+	}
+	.fine {
+		color: var(--text-dim);
+	}
+	.preview {
+		color: var(--text-muted);
+	}
+	input:disabled,
+	button:disabled {
+		opacity: 0.55;
+		cursor: not-allowed;
+	}
+	@media (max-width: 480px) {
+		.subscribe {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
+
+<script>
+	// Hand the email off to Stripe Checkout via the Payment Link's
+	// prefilled_email parameter. Stripe remains the source of truth for
+	// who has paid; no subscriber data is stored on this site.
+	const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+	document.querySelectorAll<HTMLFormElement>('form.subscribe').forEach((form) => {
+		// Preview mode: no Stripe link configured yet. The fields are already
+		// disabled server-side, so there is nothing to wire up.
+		if (form.dataset.checkoutReady !== 'true') return;
+
+		const input = form.querySelector<HTMLInputElement>('input[type="email"]')!;
+		const error = form.querySelector<HTMLParagraphElement>('.error')!;
+		const button = form.querySelector<HTMLButtonElement>('button')!;
+
+		const clearError = () => {
+			error.hidden = true;
+			error.textContent = '';
+		};
+		input.addEventListener('input', clearError);
+
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+			const email = input.value.trim();
+
+			if (!EMAIL_RE.test(email)) {
+				error.textContent = 'Enter a valid email address.';
+				error.hidden = false;
+				input.focus();
+				return;
+			}
+
+			clearError();
+			button.disabled = true;
+			button.textContent = 'Redirecting…';
+
+			const url = new URL(form.dataset.stripeLink!);
+			url.searchParams.set('prefilled_email', email);
+			window.location.href = url.toString();
+		});
+	});
+</script>
