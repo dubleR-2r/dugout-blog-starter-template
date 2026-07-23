@@ -45,6 +45,14 @@ export const LAUNCH_OFFER = {
 // Effective date shown on the Terms of Service and Privacy Policy.
 export const EFFECTIVE_DATE = "June 1, 2026";
 
-// Shown wherever AI-generated filing interpretations are displayed.
-export const AI_DISCLOSURE =
+// Shown wherever AI-generated filing interpretations are displayed. A filing is
+// a primary source, so the instruction is "verify against the primary source."
+export const AI_DISCLOSURE_FILINGS =
 	"Automated summary of SEC filings. Filing interpretations are AI-generated and may contain errors — verify against the primary source before acting. This is not investment advice and reflects no recommendation to buy, sell, or hold any security.";
+
+// Shown wherever AI-generated news summaries are displayed. News is a secondary
+// account that can be updated or retracted, so the instruction is to read the
+// linked original — not "the primary source." Keep in sync with the email
+// footer in docs/news-brief-module.md §7.
+export const AI_DISCLOSURE_NEWS =
+	"Automated summary of third-party news reporting. Summaries are AI-generated and may contain errors or stale information; the underlying reporting may itself be updated or retracted — read the linked original before acting. This is not investment advice and reflects no recommendation to buy, sell, or hold any security.";
