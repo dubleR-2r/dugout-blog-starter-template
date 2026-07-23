@@ -1,0 +1,296 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SubscribeForm from '../components/SubscribeForm.astro';
+import { SITE_TITLE, PRICE_AMOUNT, AI_DISCLOSURE } from '../consts';
+
+// ILLUSTRATIVE CONTENT ONLY.
+// These entries demonstrate the digest's format and tagging scheme. They are
+// written examples, not summaries of real filings, and are labelled as such on
+// the page. Do not present them as actual EDGAR data.
+const items = [
+	{
+		form: '8-K',
+		company: 'Example Semiconductor Corp.',
+		ticker: 'EXMP',
+		tags: 'Memory/HBM · Core · High · HBM pricing, Supply vs demand',
+		body: 'The filing discloses a multi-year supply agreement for high-bandwidth memory [confirmed]; pricing terms not disclosed. Item 1.01 characterises the agreement as material to the registrant.',
+		filed: '2026-07-21',
+	},
+	{
+		form: '8-K',
+		company: 'Sample Foundry Holdings',
+		ticker: 'SFHX',
+		tags: 'Foundry/Packaging · Core · Medium · Capex concentration',
+		body: 'The registrant reports a revised capital expenditure range for the fiscal year [confirmed]. The filing attributes the revision to advanced packaging capacity timing and does not quantify the impact on utilisation.',
+		filed: '2026-07-21',
+	},
+	{
+		form: '4',
+		company: 'Illustrative Power & Light',
+		ticker: 'ILPX',
+		tags: 'Power/Energy · Satellite · Low · Power constraint',
+		body: 'A Section 16 officer reports a scheduled disposition under a pre-existing Rule 10b5-1 plan [confirmed]. Routine; the plan adoption date precedes the transaction.',
+		filed: '2026-07-20',
+	},
+];
+
+const headlines = [
+	'Data-center power interconnect queues extend in two regional markets — trade press',
+	'Advanced packaging capacity additions announced for 2027 — industry wire',
+	'Memory contract pricing commentary from a supplier earnings call — newswire',
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={`Sample digest — ${SITE_TITLE}`}
+			description={`An illustrative example of the ${SITE_TITLE} daily digest format.`}
+		/>
+	</head>
+	<body>
+		<Header />
+
+		<main class="wrap">
+			<div class="sample-page">
+				<p class="eyebrow">Sample</p>
+				<h1>What lands in your inbox.</h1>
+				<p class="lede">
+					This is the digest format: what was filed, the tags that place it, one or two plain-English
+					lines, and a link to the source document.
+				</p>
+
+				<div class="banner" role="note">
+					<strong>Illustrative example.</strong> The entries below are written demonstrations of the
+					format using fictional companies. They are not summaries of real SEC filings and contain no
+					actual filing data. In a live issue, every item links to the original document on EDGAR.
+				</div>
+
+				<!-- Mock email -->
+				<div class="inbox">
+					<div class="inbox-head">
+						<span class="dot" aria-hidden="true"></span>
+						<div>
+							<p class="subj">{SITE_TITLE} — Daily Digest</p>
+							<p class="meta">Example issue · 3 notable filings</p>
+						</div>
+					</div>
+
+					<div class="inbox-body">
+						{
+							items.map((item) => (
+								<article class="entry">
+									<p class="entry-head">
+										<strong>{item.form}</strong> — {item.company} ({item.ticker})
+									</p>
+									<p class="entry-tags">{item.tags}</p>
+									<p class="entry-body">{item.body}</p>
+									<p class="entry-foot">Filed: {item.filed} · <span>View filing</span></p>
+								</article>
+							))
+						}
+
+						<div class="entry">
+							<p class="entry-head"><strong>Headlines</strong></p>
+							<ul class="headlines">
+								{headlines.map((headline) => <li>{headline}</li>)}
+							</ul>
+						</div>
+
+						<!-- Tag legend, per the audience-facing spec -->
+						<div class="legend">
+							<p class="legend-title">How to read the tags</p>
+							<p>
+								Each filing is labelled <em>Layer · Holding type · Materiality · Themes</em>.
+							</p>
+							<p>
+								<strong>Materiality</strong> — how much it matters: <em>High</em> moves the thesis,
+								<em>Medium</em> is worth knowing, <em>Low</em> is routine.<br />
+								<strong>Holding type</strong> — <em>Core</em> = long-term chokepoint position;
+								<em>Satellite</em> = smaller tactical position; <em>Watch</em> = not held.
+							</p>
+							<p><strong>Themes</strong> — the open questions each filing informs:</p>
+							<ul>
+								<li>
+									<strong>HBM pricing</strong> — is memory pricing power real, or capped by long-term
+									contracts?
+								</li>
+								<li>
+									<strong>Capex concentration</strong> — is the whole AI-infrastructure stack riding
+									one hyperscaler&rsquo;s spending?
+								</li>
+								<li>
+									<strong>Supply vs demand</strong> — for capacity-constrained suppliers, revenue
+									reflects output, not true demand.
+								</li>
+								<li>
+									<strong>Moat durability</strong> — is the company a durable monopoly or a contested
+									market?
+								</li>
+								<li>
+									<strong>Power constraint</strong> — is data-center power the next binding
+									bottleneck?
+								</li>
+							</ul>
+						</div>
+
+						<p class="ai-note">{AI_DISCLOSURE}</p>
+					</div>
+				</div>
+
+				<div class="cta">
+					<h2>Get it daily for {PRICE_AMOUNT}/mo.</h2>
+					<SubscribeForm cta="Subscribe" />
+				</div>
+			</div>
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.sample-page {
+		padding: 4rem 0 5rem;
+		max-width: 760px;
+		margin: 0 auto;
+	}
+	.sample-page h1 {
+		margin-bottom: 1rem;
+	}
+	.banner {
+		margin: 2rem 0;
+		padding: 1rem 1.25rem;
+		font-size: 0.85rem;
+		line-height: 1.6;
+		color: var(--text-muted);
+		background: rgba(250, 204, 21, 0.06);
+		border: 1px solid rgba(250, 204, 21, 0.3);
+		border-radius: 8px;
+	}
+	.banner strong {
+		color: #facc15;
+	}
+
+	/* Mock email shell */
+	.inbox {
+		border: 1px solid var(--border-bright);
+		border-radius: var(--radius);
+		overflow: hidden;
+		background: var(--bg-panel);
+	}
+	.inbox-head {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 1rem 1.5rem;
+		background: var(--bg-elevated);
+		border-bottom: 1px solid var(--border);
+	}
+	.dot {
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background: var(--signal);
+		flex: none;
+	}
+	.subj {
+		margin: 0;
+		font-weight: 700;
+		font-size: 0.95rem;
+		color: var(--text);
+	}
+	.meta {
+		margin: 0;
+		font-size: 0.78rem;
+		color: var(--text-dim);
+	}
+	.inbox-body {
+		padding: 0.5rem 1.5rem 1.5rem;
+	}
+	.entry {
+		padding: 1.5rem 0;
+		border-bottom: 1px solid var(--border);
+	}
+	.entry p {
+		margin: 0 0 0.4rem;
+	}
+	.entry-head {
+		font-size: 0.95rem;
+		color: var(--text);
+	}
+	.entry-tags {
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		color: var(--accent);
+	}
+	.entry-body {
+		font-size: 0.9rem;
+		color: var(--text-muted);
+	}
+	.entry-foot {
+		font-size: 0.78rem;
+		color: var(--text-dim);
+		margin: 0;
+	}
+	/* Not a link: the sample has no real source document to point at. */
+	.entry-foot span {
+		color: var(--text-dim);
+		text-decoration: underline;
+		text-decoration-style: dotted;
+	}
+	.headlines {
+		margin: 0.5rem 0 0;
+		padding-left: 1.1rem;
+		font-size: 0.88rem;
+		color: var(--text-muted);
+	}
+	.headlines li {
+		margin-bottom: 0.4rem;
+	}
+
+	.legend {
+		padding: 1.5rem 0;
+		border-bottom: 1px solid var(--border);
+		font-size: 0.8rem;
+		color: var(--text-dim);
+		line-height: 1.6;
+	}
+	.legend-title {
+		font-weight: 700;
+		color: var(--text-muted);
+	}
+	.legend p {
+		margin: 0 0 0.6rem;
+	}
+	.legend ul {
+		margin: 0;
+		padding-left: 1.1rem;
+	}
+	.legend li {
+		margin-bottom: 0.3rem;
+	}
+	.legend strong {
+		color: var(--text-muted);
+	}
+
+	.ai-note {
+		margin: 1.25rem 0 0;
+		font-size: 0.75rem;
+		line-height: 1.6;
+		color: var(--text-dim);
+	}
+
+	.cta {
+		margin-top: 3.5rem;
+		padding-top: 3rem;
+		border-top: 1px solid var(--border);
+	}
+	.cta h2 {
+		font-size: 1.6rem;
+		margin-bottom: 1.5rem;
+	}
+</style>

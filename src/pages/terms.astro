@@ -1,0 +1,156 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, CONTACT_EMAIL, EFFECTIVE_DATE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={`Terms of Service — ${SITE_TITLE}`}
+			description={`The terms governing your subscription to ${SITE_TITLE}.`}
+		/>
+	</head>
+	<body>
+		<Header />
+
+		<main class="wrap">
+			<article class="prose">
+				<h1>{SITE_TITLE} — Terms of Service</h1>
+				<p class="updated">Effective date: {EFFECTIVE_DATE}</p>
+
+				<p>
+					<strong>Provider:</strong> RJR Trading Strategies LLC, a Maryland limited liability company
+					trading as "The Weekend Dugout" ("Company," "we," "us"). By subscribing to or accessing The
+					Weekend Dugout service (the "Service"), you ("Subscriber," "you") agree to these Terms of
+					Service ("Terms").
+				</p>
+
+				<h2>1. The Service</h2>
+				<p>
+					The Service provides curated informational digests of publicly available regulatory filings
+					(including filings made with the U.S. Securities and Exchange Commission via the EDGAR
+					system) and aggregated news headlines with links to original sources, together with the
+					Company's summaries, filters, and commentary. Delivery is by email and/or other channels
+					described at checkout. Content, delivery frequency, coverage, and features may change as
+					the Service evolves.
+				</p>
+
+				<h2>2. Informational Purposes Only — No Investment Advice</h2>
+				<p>
+					The Service is provided for informational and educational purposes only. Nothing in the
+					Service constitutes, and should not be construed as, investment advice, a recommendation,
+					an offer or solicitation to buy or sell any security or financial instrument, or legal,
+					tax, or accounting advice. The Company is not a registered investment adviser,
+					broker-dealer, or fiduciary to you, and no adviser-client relationship is created by your
+					subscription. Summaries and commentary are descriptive characterizations of public
+					information, not directives to act. You are solely responsible for your own investment
+					decisions and should consult a licensed professional before making any financial decision.
+				</p>
+
+				<h2>3. Accuracy, Timeliness, and Sources</h2>
+				<p>
+					The Service aggregates and summarizes information from third-party and government sources.
+					The Company does not guarantee the accuracy, completeness, or timeliness of any content.
+					Filings may be delayed, amended, or withdrawn by their filers; news sources may correct or
+					retract items; automated delivery may be interrupted. Original filings on EDGAR and
+					original news articles at their source publications are the authoritative versions and
+					always control over any summary provided by the Service.
+				</p>
+
+				<h2>4. Intellectual Property</h2>
+				<p>
+					The Company's curation, summaries, formatting, commentary, and compilations are the
+					intellectual property of RJR Trading Strategies LLC. Underlying government filings are
+					public information; linked news content remains the property of its respective publishers,
+					and the Service links to — rather than reproduces — such content. Your subscription grants
+					you a personal, non-transferable, non-exclusive license to use the Service for your own
+					informational purposes. You may not redistribute, resell, republish, scrape, or
+					systematically archive Service content, or share access credentials, without prior written
+					permission.
+				</p>
+
+				<h2>5. Subscriptions, Billing, and Cancellation</h2>
+				<p>
+					Subscriptions are billed in advance on a recurring monthly basis through our payment
+					processor (Stripe) at the price shown at checkout, plus any applicable sales tax. You may
+					cancel at any time, effective at the end of the current billing period; access continues
+					through the period already paid. Except where required by law, payments are non-refundable
+					once a billing period begins; however, if the Service fails to deliver for five (5) or more
+					consecutive days due to a fault within our control, you may request a pro-rata credit. We
+					may change pricing with at least fourteen (14) days' notice before it takes effect on your
+					next renewal.
+				</p>
+
+				<h2>6. Acceptable Use</h2>
+				<p>
+					You agree not to use the Service (a) for any unlawful purpose, including market
+					manipulation or trading on material non-public information (the Service contains only
+					public information, and you must not combine it with non-public information to violate
+					securities laws); (b) to build a competing data product from Service content; or (c) in any
+					manner that interferes with the operation of the Service.
+				</p>
+
+				<h2>7. Disclaimer of Warranties</h2>
+				<p class="caps">
+					THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE," WITHOUT WARRANTIES OF ANY KIND, EXPRESS
+					OR IMPLIED, INCLUDING FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, ACCURACY, OR
+					UNINTERRUPTED AVAILABILITY.
+				</p>
+
+				<h2>8. Limitation of Liability</h2>
+				<p>
+					<span class="caps"
+						>TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE COMPANY'S TOTAL LIABILITY ARISING OUT OF OR
+						RELATING TO THE SERVICE SHALL NOT EXCEED THE AMOUNTS YOU PAID FOR THE SERVICE IN THE
+						THREE (3) MONTHS PRECEDING THE CLAIM. THE COMPANY SHALL NOT BE LIABLE FOR ANY INDIRECT,
+						INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES, INCLUDING TRADING LOSSES, LOST PROFITS,
+						OR LOST OPPORTUNITIES, EVEN IF ADVISED OF THE POSSIBILITY.</span
+					> Some jurisdictions do not allow certain limitations; in those jurisdictions, liability is
+					limited to the fullest extent permitted.
+				</p>
+
+				<h2>9. Indemnification</h2>
+				<p>
+					You agree to indemnify and hold harmless the Company and its member, agents, and affiliates
+					from claims arising out of your misuse of the Service or violation of these Terms.
+				</p>
+
+				<h2>10. Modifications; Termination</h2>
+				<p>
+					We may update these Terms with notice via the Service; continued use after the effective
+					date constitutes acceptance. We may suspend or terminate access for violation of these
+					Terms, with a pro-rata refund of any prepaid period if termination is not for cause.
+				</p>
+
+				<h2>11. Governing Law; Disputes</h2>
+				<p>
+					These Terms are governed by the laws of the State of Maryland, without regard to
+					conflict-of-laws principles. Disputes shall be resolved in the state or federal courts
+					located in Maryland, and each party consents to their jurisdiction. In any action to
+					enforce these Terms, the prevailing party is entitled to reasonable attorneys' fees.
+				</p>
+
+				<h2>12. Contact</h2>
+				<p>
+					RJR Trading Strategies LLC · 11907 Sun Valley Drive, Fort Washington, MD 20744 ·
+					<a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+				</p>
+			</article>
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.prose p {
+		font-size: 0.95rem;
+	}
+	.caps {
+		font-size: 0.9rem;
+		color: var(--text);
+	}
+</style>
