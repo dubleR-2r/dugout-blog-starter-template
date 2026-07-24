@@ -24,6 +24,14 @@ export const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/fZueVf9544gff1jfO3fYY
 /** True once a real Stripe Payment Link is configured above. */
 export const CHECKOUT_READY = !STRIPE_PAYMENT_LINK.includes("REPLACE_ME");
 
+// Stripe customer-portal login link (Stripe Dashboard → Settings → Billing →
+// Customer portal → "Share a link"). This is where existing subscribers manage
+// or cancel their subscription; canceling here removes them from the send list
+// via Scenario B (see docs/stripe-make-subscriber-flow.md §8). Shown in the
+// footer. Set to null to hide the "Manage subscription" link.
+export const STRIPE_PORTAL_LINK =
+	"https://billing.stripe.com/p/login/fZueVf9544gff1jfO3fYY00";
+
 // Shown to visitors in place of checkout while CHECKOUT_READY is false.
 export const PREVIEW_NOTICE =
 	"Checkout opens soon — subscriptions aren't live on this site yet.";
