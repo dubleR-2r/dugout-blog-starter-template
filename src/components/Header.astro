@@ -1,14 +1,25 @@
 ---
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, COMING_SOON, COMING_SOON_NOTICE } from '../consts';
 
 interface Props {
 	/** The landing page uses in-page anchors; other pages link back home. */
 	home?: boolean;
 }
 const { home = false } = Astro.props;
+
+// While in coming-soon mode the CTA still scrolls to the signup section, but it
+// shouldn't promise a checkout that can't happen.
+const ctaLabel = COMING_SOON ? 'Coming soon' : 'Subscribe';
 ---
 
 <header>
+	{
+		COMING_SOON && (
+			<div class="notice">
+				<div class="wrap">{COMING_SOON_NOTICE}</div>
+			</div>
+		)
+	}
 	<div class="wrap bar">
 		<a class="brand" href="/">
 			<span class="mark" aria-hidden="true"></span>
@@ -22,12 +33,12 @@ const { home = false } = Astro.props;
 						<a href="/sample">Sample</a>
 						<a href="#pricing">Pricing</a>
 						<a class="cta" href="#subscribe">
-							Subscribe
+							{ctaLabel}
 						</a>
 					</>
 				) : (
 					<a class="cta" href="/#subscribe">
-						Subscribe
+						{ctaLabel}
 					</a>
 				)
 			}
@@ -43,6 +54,15 @@ const { home = false } = Astro.props;
 		border-bottom: 1px solid var(--border);
 		background: rgba(10, 13, 20, 0.85);
 		backdrop-filter: blur(12px);
+	}
+	.notice {
+		border-bottom: 1px solid var(--border);
+		background: rgba(52, 211, 153, 0.08);
+		color: var(--text);
+		font-size: 0.85rem;
+		line-height: 1.5;
+		text-align: center;
+		padding: 0.6rem 0;
 	}
 	.bar {
 		display: flex;

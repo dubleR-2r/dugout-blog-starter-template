@@ -12,6 +12,7 @@ import {
 	PRICE_AMOUNT,
 	PRICE_INTERVAL,
 	LAUNCH_OFFER,
+	COMING_SOON,
 } from '../consts';
 
 const steps = [
@@ -145,8 +146,11 @@ const faqs = [
 							<p class="eyebrow">Pricing</p>
 							<h2>One plan. Cancel anytime.</h2>
 							<p class="lede">
-								Enter your email and you&rsquo;ll be taken to Stripe to complete checkout. The digest
-								starts on the next scheduled delivery.
+								{
+									COMING_SOON
+										? 'Sign-ups open in a few days. Pricing below is what it will be at launch.'
+										: 'Enter your email and you’ll be taken to Stripe to complete checkout. The digest starts on the next scheduled delivery.'
+								}
 							</p>
 							<SubscribeForm cta="Continue to checkout" />
 						</div>
