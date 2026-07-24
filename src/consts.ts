@@ -21,8 +21,25 @@ export const CONTACT_EMAIL = "rjrts@theweekenddugout.com";
 // (see CHECKOUT_READY below) instead of sending anyone to a dead link.
 export const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/fZueVf9544gff1jfO3fYY00";
 
-/** True once a real Stripe Payment Link is configured above. */
-export const CHECKOUT_READY = !STRIPE_PAYMENT_LINK.includes("REPLACE_ME");
+// ── COMING SOON MODE ────────────────────────────────────────────────────────
+// Temporary. While true, the site renders normally but NO ONE CAN SIGN UP:
+// every subscribe form is disabled server-side (so the Stripe redirect can't
+// fire even with JS), and a site-wide banner explains why.
+//
+// TO REVERT: set this to false, `npm run build`, `npx wrangler deploy`.
+// Nothing else needs touching — every coming-soon change keys off this flag.
+// Full pre-coming-soon state is also tagged in git as `prod-2026-07-24`.
+export const COMING_SOON = true;
+
+// Banner copy shown site-wide while COMING_SOON is true.
+export const COMING_SOON_NOTICE = "Subscriptions open shortly — check back in a few days.";
+
+/**
+ * True once a real Stripe Payment Link is configured above AND the site isn't
+ * in coming-soon mode. Gates every subscribe form on the site.
+ */
+export const CHECKOUT_READY =
+	!COMING_SOON && !STRIPE_PAYMENT_LINK.includes("REPLACE_ME");
 
 // Stripe customer-portal login link (Stripe Dashboard → Settings → Billing →
 // Customer portal → "Share a link"). This is where existing subscribers manage
@@ -34,7 +51,7 @@ export const STRIPE_PORTAL_LINK =
 
 // Shown to visitors in place of checkout while CHECKOUT_READY is false.
 export const PREVIEW_NOTICE =
-	"Checkout opens soon — subscriptions aren't live on this site yet.";
+	"Subscriptions aren't open yet — no sign-ups are being taken right now. Check back in a few days.";
 
 // Displayed pricing. Keep in sync with the Stripe Payment Link above — these
 // strings are cosmetic and do not affect what Stripe actually charges.
