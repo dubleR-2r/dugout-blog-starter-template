@@ -12,24 +12,26 @@ export const SITE_URL = "https://theweekenddugout.com";
 export const LEGAL_ENTITY = "RJR Trading Strategies LLC";
 export const CONTACT_EMAIL = "rjrts@theweekenddugout.com";
 
-// TODO: replace with your live Stripe Payment Link for the Standard tier.
-// Stripe Dashboard → Payment Links → create a link → copy the buy.stripe.com URL.
-// The signup form appends ?prefilled_email=<email> when redirecting to it.
-//
-// Until this is a real buy.stripe.com URL the site stays fully publishable:
-// the page renders normally, but the signup form switches to "preview mode"
-// (see CHECKOUT_READY below) instead of sending anyone to a dead link.
+// Live Stripe Payment Link for the Standard tier. This link is configured in
+// Stripe with a 7-day free trial that requires a card up front (Stripe collects
+// email + payment method, charges $0 today, and auto-converts to the plan price
+// when the trial ends). The signup form appends ?prefilled_email=<email> when
+// redirecting to it. Keep TRIAL_DAYS below in sync with the Stripe setting.
 export const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/fZueVf9544gff1jfO3fYY00";
+
+// Length of the free trial configured on the Stripe Payment Link above. Cosmetic
+// on the site — Stripe is the source of truth — but keep it matched so the copy
+// doesn't lie about how long people have before the first charge.
+export const TRIAL_DAYS = 7;
 
 // ── COMING SOON MODE ────────────────────────────────────────────────────────
 // Temporary. While true, the site renders normally but NO ONE CAN SIGN UP:
 // every subscribe form is disabled server-side (so the Stripe redirect can't
 // fire even with JS), and a site-wide banner explains why.
 //
-// TO REVERT: set this to false, `npm run build`, `npx wrangler deploy`.
+// TO RE-ENABLE: set this to true, `npm run build`, `npx wrangler deploy`.
 // Nothing else needs touching — every coming-soon change keys off this flag.
-// Full pre-coming-soon state is also tagged in git as `prod-2026-07-24`.
-export const COMING_SOON = true;
+export const COMING_SOON = false;
 
 // Banner copy shown site-wide while COMING_SOON is true.
 export const COMING_SOON_NOTICE = "Subscriptions open shortly — check back in a few days.";
@@ -59,11 +61,13 @@ export const PLAN_NAME = "Standard";
 export const PRICE_AMOUNT = "$4.99";
 export const PRICE_INTERVAL = "per month";
 
-// Launch promotion. Set to null to remove the banner and pricing callout.
-// The code itself must be created as a promotion code in Stripe.
+// Launch promotion, layered on top of the free trial: the trial is the headline,
+// and this code discounts the FIRST PAID month once the trial converts. Set to
+// null to remove the banner and pricing callout. The code itself must exist as a
+// promotion code in Stripe, and must be valid to apply after a trial.
 export const LAUNCH_OFFER = {
 	code: "INVESTFEST26",
-	text: "Launch offer: first month $1 with code INVESTFEST26",
+	text: "After your free trial, get your first month for $1 with code INVESTFEST26",
 	deadline: "available through August 9",
 };
 
