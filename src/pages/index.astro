@@ -14,6 +14,8 @@ import {
 	LAUNCH_OFFER,
 	COMING_SOON,
 	TRIAL_DAYS,
+	FILINGS_CADENCE,
+	NEWS_CADENCE,
 } from '../consts';
 
 const steps = [
@@ -30,14 +32,14 @@ const steps = [
 	{
 		n: '3',
 		title: 'Deliver',
-		body: 'One clean digest in your inbox. No terminal, no tab-hoarding, no doomscrolling. Read it in five minutes; go deeper only where it’s warranted.',
+		body: `Clean, scannable briefs in your inbox — filing summaries ${FILINGS_CADENCE}, news briefs ${NEWS_CADENCE}. No terminal, no tab-hoarding, no doomscrolling. Read each in five minutes; go deeper only where it’s warranted.`,
 	},
 ];
 
 const planFeatures = [
-	'Daily market-wide digest of notable filings',
-	'Curated news headlines with source links',
-	'Plain-English materiality notes',
+	`SEC filing summaries ${FILINGS_CADENCE}`,
+	`Curated news briefs ${NEWS_CADENCE}`,
+	'Plain-English materiality notes with source links',
 	'Cancel anytime',
 ];
 
@@ -55,8 +57,8 @@ const faqs = [
 		a: 'Completely — and you’re welcome to read a few thousand filings a day yourself. You’re not paying for the data; you’re paying for the filtering, the plain-English decoding, and the five-minute format.',
 	},
 	{
-		q: 'How fast are alerts?',
-		a: 'Digest items arrive daily. We never guarantee timeliness — original sources always control — but the automation doesn’t sleep.',
+		q: 'How often does it arrive?',
+		a: `SEC filing summaries go out ${FILINGS_CADENCE}, and news briefs ${NEWS_CADENCE}. The monitoring runs around the clock, but delivery is on that schedule — we never guarantee timeliness, and original sources always control.`,
 	},
 	{
 		q: 'Can I cancel?',
