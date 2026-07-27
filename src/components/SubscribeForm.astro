@@ -1,5 +1,12 @@
 ---
-import { STRIPE_PAYMENT_LINK, CHECKOUT_READY, PREVIEW_NOTICE } from '../consts';
+import {
+	STRIPE_PAYMENT_LINK,
+	CHECKOUT_READY,
+	PREVIEW_NOTICE,
+	TRIAL_DAYS,
+	PRICE_AMOUNT,
+	PRICE_INTERVAL,
+} from '../consts';
 
 interface Props {
 	/** Label on the submit button. */
@@ -35,7 +42,9 @@ const fieldId = `email-${cta.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}`;
 		CHECKOUT_READY
 			? note && (
 					<p class="fine">
-						You'll be taken to Stripe to complete checkout. By subscribing you agree to the{' '}
+						Free for {TRIAL_DAYS} days, then {PRICE_AMOUNT} {PRICE_INTERVAL}. You'll enter a card
+						on Stripe but won't be charged today — cancel anytime before the trial ends and you
+						pay nothing. By starting a trial you agree to the{' '}
 						<a href="/terms">Terms of Service</a>.
 					</p>
 				)

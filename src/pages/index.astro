@@ -13,6 +13,7 @@ import {
 	PRICE_INTERVAL,
 	LAUNCH_OFFER,
 	COMING_SOON,
+	TRIAL_DAYS,
 } from '../consts';
 
 const steps = [
@@ -44,6 +45,10 @@ const faqs = [
 	{
 		q: 'Is The Weekend Dugout stock picks or trade alerts?',
 		a: 'No — and deliberately so. The Weekend Dugout tells you what happened and why it’s material. What you do with it is your decision. We report facts and context, never buy/sell calls.',
+	},
+	{
+		q: 'Is there a free trial?',
+		a: `Yes — every subscription starts with a ${TRIAL_DAYS}-day free trial. You add a card up front so the digest can begin immediately, but you aren’t charged until the trial ends. Cancel anytime before then and you pay nothing.`,
 	},
 	{
 		q: 'Isn’t EDGAR free?',
@@ -84,7 +89,7 @@ const faqs = [
 						out last.
 					</p>
 					<div class="hero-form">
-						<SubscribeForm cta={`Start for ${PRICE_AMOUNT}/mo`} />
+						<SubscribeForm cta={`Start your ${TRIAL_DAYS}-day free trial`} />
 					</div>
 					<p class="secondary-cta">
 						<a href="/sample">See a sample digest →</a>
@@ -149,14 +154,15 @@ const faqs = [
 								{
 									COMING_SOON
 										? 'Sign-ups open in a few days. Pricing below is what it will be at launch.'
-										: 'Enter your email and you’ll be taken to Stripe to complete checkout. The digest starts on the next scheduled delivery.'
+										: `Start a ${TRIAL_DAYS}-day free trial. Enter your email, add a card on Stripe, and the digest starts on the next delivery — you’re not charged until the trial ends, and you can cancel anytime.`
 								}
 							</p>
-							<SubscribeForm cta="Continue to checkout" />
+							<SubscribeForm cta="Start free trial" />
 						</div>
 						<aside class="price-card">
 							<p class="plan">{PLAN_NAME}</p>
-							<p class="amount">{PRICE_AMOUNT}<span>{PRICE_INTERVAL}</span></p>
+							<p class="trial-badge">{TRIAL_DAYS} days free</p>
+							<p class="amount">then {PRICE_AMOUNT}<span>{PRICE_INTERVAL}</span></p>
 							<ul>
 								{planFeatures.map((feature) => <li>{feature}</li>)}
 							</ul>
@@ -321,6 +327,17 @@ const faqs = [
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
 		color: var(--accent);
+		margin-bottom: 0.75rem;
+	}
+	.trial-badge {
+		display: inline-block;
+		font-size: 0.8rem;
+		font-weight: 600;
+		color: var(--accent-bright);
+		background: rgba(52, 211, 153, 0.12);
+		border: 1px solid var(--border-bright);
+		border-radius: 999px;
+		padding: 0.25rem 0.7rem;
 		margin-bottom: 0.75rem;
 	}
 	.amount {
