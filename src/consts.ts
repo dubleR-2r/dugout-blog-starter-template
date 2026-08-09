@@ -71,19 +71,30 @@ export const NEWS_CADENCE = "three times a week (Monday, Wednesday, and Friday)"
 export const FILINGS_DAYS_SHORT = "Tue & Fri";
 export const NEWS_DAYS_SHORT = "Mon · Wed · Fri";
 
-// The coverage universe — the AI-infrastructure supply chain we monitor, grouped
-// by thesis layer. This is honest proof of scope (concrete names beat vague
-// claims), and it doubles as the source for the "What we cover" grid. Keep it
-// matched to the watchlist the automation actually tracks. `core: true` marks the
-// chokepoint / toll-keeper names the thesis leans on hardest.
-export const COVERAGE = [
-	{ layer: "Foundry & packaging", tickers: ["TSM", "AMKR"], core: true },
-	{ layer: "Memory / HBM", tickers: ["MU"], core: true },
-	{ layer: "Compute", tickers: ["NVDA", "AVGO", "AMD", "ALAB"], core: true },
-	{ layer: "Interconnect & networking", tickers: ["MRVL", "ANET"], core: false },
-	{ layer: "EDA", tickers: ["CDNS", "SNPS"], core: true },
-	{ layer: "Equipment", tickers: ["ASML", "AMAT"], core: true },
-	{ layer: "Power & energy", tickers: ["CEG", "VST", "AIPO"], core: false },
+// SEC FILING WATCHLIST — the companies whose every filing the automation scans,
+// grouped by role. This is the REAL scan list; keep it matched to the automation
+// (ticker + CIK live in the Make scenario). Note: the news brief is NOT limited
+// to these names — it is theme-driven; see NEWS_THEMES below.
+export const SEC_WATCHLIST = [
+	{ role: "Foundry & packaging", tickers: ["TSM", "AMKR"] },
+	{ role: "Design IP", tickers: ["ARM"] },
+	{ role: "Memory / HBM", tickers: ["MU"] },
+	{ role: "Compute & interconnect", tickers: ["NVDA", "AMD", "AVGO"] },
+	{ role: "EDA", tickers: ["SNPS", "CDNS"] },
+	{ role: "Equipment", tickers: ["ASML"] },
+	{ role: "Hyperscalers", tickers: ["META", "MSFT"] },
+	{ role: "Portfolio holdings", tickers: ["PLTR", "HOOD"] },
+];
+
+// NEWS BRIEFS are organized by THESIS THEME, not by ticker. Any company that
+// moves a theme can appear — a utility, a hyperscaler, a pipeline operator — so
+// the roster is open-ended by design. Keep in sync with docs/news-brief-module.md.
+export const NEWS_THEMES = [
+	{ name: "Power constraint", blurb: "Is data-center power the next binding bottleneck?" },
+	{ name: "Capex concentration", blurb: "Is the whole stack riding one hyperscaler's spending?" },
+	{ name: "HBM pricing", blurb: "Is memory pricing power real, or capped by long-term contracts?" },
+	{ name: "Supply vs demand", blurb: "For capacity-constrained suppliers, is revenue output — not true demand?" },
+	{ name: "Moat durability", blurb: "Durable monopoly, or a contested market?" },
 ];
 
 // Launch promotion, layered on top of the free trial: the trial is the headline,
