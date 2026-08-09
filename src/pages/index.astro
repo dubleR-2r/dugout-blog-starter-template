@@ -16,7 +16,55 @@ import {
 	TRIAL_DAYS,
 	FILINGS_CADENCE,
 	NEWS_CADENCE,
+	FILINGS_DAYS_SHORT,
+	NEWS_DAYS_SHORT,
+	COVERAGE,
+	SITE_URL,
 } from '../consts';
+
+// Coverage math, derived so the copy can never drift from the list itself.
+const coverageCount = COVERAGE.reduce((n, group) => n + group.tickers.length, 0);
+const layerCount = COVERAGE.length;
+
+// Honest proof points for the hero stat strip — specifics in place of the
+// subscriber counts a new product can't yet claim.
+const proofPoints = [
+	{ stat: `${coverageCount} names`, label: `tracked across ${layerCount} layers of the AI stack` },
+	{ stat: 'Plain English', label: 'every filing summarized, not just forwarded' },
+	{ stat: 'Set schedule', label: `filings ${FILINGS_DAYS_SHORT}, news ${NEWS_DAYS_SHORT}` },
+	{ stat: 'Source-linked', label: 'every item links to the primary document' },
+];
+
+// One representative brief entry for the homepage teaser. ILLUSTRATIVE — written
+// example of the format, not a real filing; labelled as such on the page. The
+// full, longer sample lives at /sample.
+const teaser = {
+	form: '8-K',
+	company: 'Example Semiconductor Corp.',
+	ticker: 'EXMP',
+	tags: 'Memory/HBM · Core · High · HBM pricing, Supply vs demand',
+	body: 'The filing discloses a multi-year supply agreement for high-bandwidth memory [confirmed]; pricing terms not disclosed. Item 1.01 characterises the agreement as material to the registrant.',
+	filed: '2026-07-21',
+};
+
+// Page-specific structured data: the subscription product and its offer.
+const productSchema = [
+	{
+		'@type': 'Product',
+		name: `${SITE_TITLE} — ${PLAN_NAME}`,
+		description: SITE_DESCRIPTION,
+		brand: { '@type': 'Brand', name: SITE_TITLE },
+		offers: {
+			'@type': 'Offer',
+			price: PRICE_AMOUNT.replace(/[^0-9.]/g, ''),
+			priceCurrency: 'USD',
+			url: `${SITE_URL}/#subscribe`,
+			availability: COMING_SOON
+				? 'https://schema.org/PreOrder'
+				: 'https://schema.org/InStock',
+		},
+	},
+];
 
 const steps = [
 	{
@@ -57,6 +105,14 @@ const faqs = [
 		a: 'Completely — and you’re welcome to read a few thousand filings a day yourself. You’re not paying for the data; you’re paying for the filtering, the plain-English decoding, and the five-minute format.',
 	},
 	{
+		q: 'What companies do you cover?',
+		a: `The AI-infrastructure supply chain — ${coverageCount} names across ${layerCount} layers, from foundry and packaging (TSM, AMKR) through memory, compute, interconnect, EDA, equipment, and the power names behind the data centers. See the full list in the “What we cover” section above. The watchlist evolves as the thesis does.`,
+	},
+	{
+		q: 'How is this different from a free filing alert?',
+		a: 'Alerts forward you raw filings and leave the reading to you. We do the opposite: filter thousands of filings down to the material handful, decode each in plain English, tag it against the thesis (layer, materiality, theme), and link the source — so you know what happened and why it matters, not just that something was filed.',
+	},
+	{
 		q: 'How often does it arrive?',
 		a: `SEC filing summaries go out ${FILINGS_CADENCE}, and news briefs ${NEWS_CADENCE}. The monitoring runs around the clock, but delivery is on that schedule — we never guarantee timeliness, and original sources always control.`,
 	},
@@ -74,7 +130,11 @@ const faqs = [
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={`${SITE_TITLE} — ${SITE_TAGLINE}`} description={SITE_DESCRIPTION} />
+		<BaseHead
+			title={`${SITE_TITLE} — ${SITE_TAGLINE}`}
+			description={SITE_DESCRIPTION}
+			schema={productSchema}
+		/>
 	</head>
 	<body>
 		<Header home />
@@ -84,18 +144,28 @@ const faqs = [
 			<section class="hero">
 				<div class="wrap">
 					<p class="eyebrow">{SITE_TAGLINE}</p>
-					<h1>The filings that move markets, decoded before you&rsquo;ve finished your coffee.</h1>
+					<h1>The material SEC filings behind the AI trade — filtered from the noise, decoded in plain English.</h1>
 					<p class="lede">
-						Every 8-K, every material disclosure, every headline that matters — filtered, summarized
-						in plain English, and delivered to your inbox. Built by a trader who got tired of finding
-						out last.
+						Every 8-K, every material disclosure, every headline that matters — filtered for what
+						moves the AI-infrastructure supply chain, summarized in plain English, and delivered to
+						your inbox. Built by a trader who got tired of finding out last.
 					</p>
 					<div class="hero-form">
 						<SubscribeForm cta={`Start your ${TRIAL_DAYS}-day free trial`} />
 					</div>
 					<p class="secondary-cta">
-						<a href="/sample">See a sample digest →</a>
+						<a href="#sample">See what a brief looks like →</a>
 					</p>
+					<ul class="proof" aria-label="What you get">
+						{
+							proofPoints.map((point) => (
+								<li>
+									<span class="proof-stat">{point.stat}</span>
+									<span class="proof-label">{point.label}</span>
+								</li>
+							))
+						}
+					</ul>
 					{
 						LAUNCH_OFFER && (
 							<p class="offer">
@@ -142,6 +212,65 @@ const faqs = [
 							))
 						}
 					</div>
+				</div>
+			</section>
+
+			<!-- Coverage -->
+			<section id="coverage" class="band">
+				<div class="wrap">
+					<p class="eyebrow">What we cover</p>
+					<h2>{coverageCount} names across the AI-infrastructure stack.</h2>
+					<p class="lede">
+						One thesis, tracked end to end — from the foundries that print the silicon to the grid
+						that powers the data centers. Not a firehose of every ticker; the chokepoints that
+						actually move the trade.
+					</p>
+					<div class="coverage-grid">
+						{
+							COVERAGE.map((group) => (
+								<article class="coverage-cell">
+									<p class="coverage-layer">
+										{group.layer}
+										{group.core && <span class="coverage-core">Core</span>}
+									</p>
+									<ul class="coverage-tickers">
+										{group.tickers.map((t) => (
+											<li>{t}</li>
+										))}
+									</ul>
+								</article>
+							))
+						}
+					</div>
+					<p class="coverage-note">
+						Coverage evolves with the thesis. <a href="#faq">More on what and how we track →</a>
+					</p>
+				</div>
+			</section>
+
+			<!-- Sample teaser -->
+			<section id="sample" class="band alt">
+				<div class="wrap narrow">
+					<p class="eyebrow">What lands in your inbox</p>
+					<h2>A filing, decoded in two lines.</h2>
+					<p class="lede">
+						What was filed, the tags that place it in the thesis, one or two plain-English lines, and
+						a link to the source. Read it in five minutes; go deeper only where it&rsquo;s warranted.
+					</p>
+					<div class="teaser-card">
+						<p class="teaser-flag">Illustrative example — a written demonstration of the format, not a real filing.</p>
+						<article class="teaser-entry">
+							<p class="teaser-head">
+								<strong>{teaser.form}</strong> — {teaser.company} ({teaser.ticker})
+							</p>
+							<p class="teaser-tags">{teaser.tags}</p>
+							<p class="teaser-body">{teaser.body}</p>
+							<p class="teaser-foot">Filed: {teaser.filed} · <span>View filing</span></p>
+						</article>
+					</div>
+					<p class="secondary-cta">
+						<a href="/sample">See a full sample issue →</a>
+					</p>
 				</div>
 			</section>
 
@@ -261,6 +390,34 @@ const faqs = [
 		color: var(--signal);
 	}
 
+	/* Hero proof strip */
+	.proof {
+		list-style: none;
+		margin: 2.75rem 0 0;
+		padding: 2rem 0 0;
+		border-top: 1px solid var(--border);
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+		gap: 1.5rem 2rem;
+	}
+	.proof li {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+	.proof-stat {
+		font-family: var(--font-mono);
+		font-size: 1.05rem;
+		font-weight: 700;
+		color: var(--text);
+		letter-spacing: -0.01em;
+	}
+	.proof-label {
+		font-size: 0.82rem;
+		line-height: 1.45;
+		color: var(--text-dim);
+	}
+
 	/* Bands */
 	.band {
 		padding: 5rem 0;
@@ -305,6 +462,112 @@ const faqs = [
 		margin: 0;
 		font-size: 0.95rem;
 		color: var(--text-muted);
+	}
+
+	/* Coverage */
+	.coverage-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 1rem;
+		margin-top: 2.5rem;
+	}
+	.coverage-cell {
+		padding: 1.25rem 1.4rem;
+		background: var(--bg-panel);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		transition: border-color 0.15s ease;
+	}
+	.coverage-cell:hover {
+		border-color: var(--border-bright);
+	}
+	.coverage-layer {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		margin: 0 0 0.9rem;
+		font-size: 0.8rem;
+		font-weight: 700;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+	.coverage-core {
+		font-family: var(--font-mono);
+		font-size: 0.6rem;
+		letter-spacing: 0.08em;
+		color: var(--signal);
+		border: 1px solid rgba(52, 211, 153, 0.35);
+		border-radius: 999px;
+		padding: 0.1rem 0.45rem;
+	}
+	.coverage-tickers {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.coverage-tickers li {
+		font-family: var(--font-mono);
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: var(--text);
+		background: var(--bg-elevated);
+		border: 1px solid var(--border);
+		border-radius: 6px;
+		padding: 0.3rem 0.55rem;
+	}
+	.coverage-note {
+		margin: 2rem 0 0;
+		font-size: 0.9rem;
+		color: var(--text-dim);
+	}
+
+	/* Sample teaser */
+	.teaser-card {
+		margin-top: 2.5rem;
+		background: var(--bg-panel);
+		border: 1px solid var(--border-bright);
+		border-radius: var(--radius);
+		overflow: hidden;
+	}
+	.teaser-flag {
+		margin: 0;
+		padding: 0.7rem 1.5rem;
+		font-size: 0.75rem;
+		line-height: 1.5;
+		color: var(--text-dim);
+		background: rgba(250, 204, 21, 0.06);
+		border-bottom: 1px solid var(--border);
+	}
+	.teaser-entry {
+		padding: 1.5rem;
+	}
+	.teaser-entry p {
+		margin: 0 0 0.5rem;
+	}
+	.teaser-head {
+		font-size: 0.98rem;
+		color: var(--text);
+	}
+	.teaser-tags {
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		color: var(--accent);
+	}
+	.teaser-body {
+		font-size: 0.92rem;
+		color: var(--text-muted);
+	}
+	.teaser-foot {
+		margin: 0 !important;
+		font-size: 0.78rem;
+		color: var(--text-dim);
+	}
+	.teaser-foot span {
+		text-decoration: underline dotted;
 	}
 
 	/* Pricing */

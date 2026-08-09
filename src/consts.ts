@@ -67,6 +67,25 @@ export const PRICE_INTERVAL = "per month";
 export const FILINGS_CADENCE = "twice a week (Tuesday and Friday)";
 export const NEWS_CADENCE = "three times a week (Monday, Wednesday, and Friday)";
 
+// Short-form cadence for tight spaces (chips, meta).
+export const FILINGS_DAYS_SHORT = "Tue & Fri";
+export const NEWS_DAYS_SHORT = "Mon · Wed · Fri";
+
+// The coverage universe — the AI-infrastructure supply chain we monitor, grouped
+// by thesis layer. This is honest proof of scope (concrete names beat vague
+// claims), and it doubles as the source for the "What we cover" grid. Keep it
+// matched to the watchlist the automation actually tracks. `core: true` marks the
+// chokepoint / toll-keeper names the thesis leans on hardest.
+export const COVERAGE = [
+	{ layer: "Foundry & packaging", tickers: ["TSM", "AMKR"], core: true },
+	{ layer: "Memory / HBM", tickers: ["MU"], core: true },
+	{ layer: "Compute", tickers: ["NVDA", "AVGO", "AMD", "ALAB"], core: true },
+	{ layer: "Interconnect & networking", tickers: ["MRVL", "ANET"], core: false },
+	{ layer: "EDA", tickers: ["CDNS", "SNPS"], core: true },
+	{ layer: "Equipment", tickers: ["ASML", "AMAT"], core: true },
+	{ layer: "Power & energy", tickers: ["CEG", "VST", "AIPO"], core: false },
+];
+
 // Launch promotion, layered on top of the free trial: the trial is the headline,
 // and this code discounts the FIRST PAID month once the trial converts. Set to
 // null to remove the banner and pricing callout. The code itself must exist as a
