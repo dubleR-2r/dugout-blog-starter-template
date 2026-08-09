@@ -2,17 +2,45 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL, LEGAL_ENTITY, CONTACT_EMAIL } from '../consts';
 
 interface Props {
 	title: string;
 	description: string;
 	image?: string;
+	/** Extra JSON-LD nodes to merge into the @graph for this page. */
+	schema?: Record<string, unknown>[];
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = '/og.png' } = Astro.props;
+const { title, description, image = '/og.png', schema = [] } = Astro.props;
+
+// Structured data. Organization + WebSite ship on every page; pages can pass
+// additional nodes (e.g. the Product/Offer on the landing page) via `schema`.
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		{
+			'@type': 'Organization',
+			'@id': `${SITE_URL}/#organization`,
+			name: LEGAL_ENTITY,
+			alternateName: SITE_TITLE,
+			url: SITE_URL,
+			logo: `${SITE_URL}/favicon.svg`,
+			email: CONTACT_EMAIL,
+		},
+		{
+			'@type': 'WebSite',
+			'@id': `${SITE_URL}/#website`,
+			name: SITE_TITLE,
+			url: SITE_URL,
+			description: SITE_DESCRIPTION,
+			publisher: { '@id': `${SITE_URL}/#organization` },
+		},
+		...schema,
+	],
+};
 ---
 
 <!-- Global Metadata -->
@@ -21,6 +49,7 @@ const { title, description, image = '/og.png' } = Astro.props;
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
 <meta name="theme-color" content="#0a0d14" />
+<meta name="robots" content="index, follow" />
 
 <!-- Font preloads -->
 <link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
@@ -41,6 +70,7 @@ const { title, description, image = '/og.png' } = Astro.props;
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:image:alt" content={`${SITE_TITLE} — ${description}`} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
@@ -48,3 +78,7 @@ const { title, description, image = '/og.png' } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+<meta property="twitter:image:alt" content={`${SITE_TITLE} — ${description}`} />
+
+<!-- Structured data -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
