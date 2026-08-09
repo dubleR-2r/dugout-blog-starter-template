@@ -61,11 +61,11 @@ export const PLAN_NAME = "Standard";
 export const PRICE_AMOUNT = "$4.99";
 export const PRICE_INTERVAL = "per month";
 
-// Real delivery cadence — keep honest and matched to the actual Make schedules.
-// The SEC-filings digest and the news brief run on DIFFERENT frequencies, so the
-// site must not claim "daily." Update these if the schedules change.
-export const FILINGS_CADENCE = "twice a week";
-export const NEWS_CADENCE = "three times a week";
+// Real delivery cadence and the exact send days — keep honest and matched to the
+// actual Make schedules. The SEC-filings digest and the news brief run on
+// DIFFERENT days, so the site must not claim "daily." Update if schedules change.
+export const FILINGS_CADENCE = "twice a week (Tuesday and Friday)";
+export const NEWS_CADENCE = "three times a week (Monday, Wednesday, and Friday)";
 
 // Launch promotion, layered on top of the free trial: the trial is the headline,
 // and this code discounts the FIRST PAID month once the trial converts. Set to
