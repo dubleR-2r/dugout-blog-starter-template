@@ -1,5 +1,6 @@
 ---
-import { SITE_TITLE, COMING_SOON, COMING_SOON_NOTICE } from '../consts';
+import Logo from './Logo.astro';
+import { COMING_SOON, COMING_SOON_NOTICE } from '../consts';
 
 interface Props {
 	/** The landing page uses in-page anchors; other pages link back home. */
@@ -22,8 +23,8 @@ const ctaLabel = COMING_SOON ? 'Coming soon' : 'Start free trial';
 	}
 	<div class="wrap bar">
 		<a class="brand" href="/">
-			<span class="mark" aria-hidden="true"></span>
-			{SITE_TITLE}
+			<Logo class="brand-mark" size={26} />
+			<span class="brand-name">Weekend Dugout</span>
 		</a>
 		<nav>
 			{
@@ -75,9 +76,9 @@ const ctaLabel = COMING_SOON ? 'Coming soon' : 'Start free trial';
 	.brand {
 		display: flex;
 		align-items: center;
-		gap: 0.6rem;
+		gap: 0.55rem;
 		font-weight: 700;
-		font-size: 1rem;
+		font-size: 1.05rem;
 		letter-spacing: -0.01em;
 		color: var(--text);
 	}
@@ -85,12 +86,12 @@ const ctaLabel = COMING_SOON ? 'Coming soon' : 'Start free trial';
 		text-decoration: none;
 		color: #fff;
 	}
-	.mark {
-		width: 9px;
-		height: 9px;
-		border-radius: 50%;
-		background: var(--signal);
-		box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.15);
+	.brand-mark {
+		flex: none;
+		filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.35));
+	}
+	.brand-name {
+		line-height: 1;
 	}
 	nav {
 		display: flex;
@@ -107,13 +108,20 @@ const ctaLabel = COMING_SOON ? 'Coming soon' : 'Start free trial';
 	}
 	.cta {
 		padding: 0.5rem 1.1rem;
-		border: 1px solid var(--border-bright);
 		border-radius: 8px;
-		color: var(--text);
+		font-weight: 700;
+		color: var(--gold-ink);
+		background: var(--gold);
+		box-shadow: 0 4px 14px -6px rgba(251, 191, 36, 0.6);
+		transition:
+			background 0.15s ease,
+			box-shadow 0.15s ease;
 	}
 	.cta:hover {
-		border-color: var(--accent);
-		color: var(--accent-bright);
+		color: var(--gold-ink);
+		background: var(--gold-bright);
+		text-decoration: none;
+		box-shadow: 0 6px 18px -6px rgba(251, 191, 36, 0.75);
 	}
 	@media (max-width: 620px) {
 		nav a:not(.cta) {

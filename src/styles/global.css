@@ -18,13 +18,19 @@
 	--accent-dim: #1e3a5f;
 	--signal: #34d399;
 
+	/* Conversion color — reserved for the buy/trial action so it stays the
+	   single brightest, most isolated element on the page (Von Restorff). */
+	--gold: #fbbf24;
+	--gold-bright: #fcd34d;
+	--gold-ink: #17130a;
+
 	--font-sans:
 		"Atkinson", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 	--font-mono:
 		ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
 	--maxw: 1080px;
-	--radius: 10px;
+	--radius: 12px;
 }
 
 @font-face {
@@ -120,6 +126,13 @@ a:hover {
 	max-width: 60ch;
 }
 
+/* Highlighter-marker emphasis — warm, approachable, draws the eye to the value. */
+.hl {
+	color: #fff;
+	background: linear-gradient(transparent 58%, rgba(251, 191, 36, 0.35) 0);
+	padding: 0 0.05em;
+}
+
 .btn {
 	display: inline-flex;
 	align-items: center;
@@ -129,18 +142,21 @@ a:hover {
 	font-family: inherit;
 	font-size: 1rem;
 	font-weight: 700;
-	color: #06121f;
-	background: var(--accent);
+	color: var(--gold-ink);
+	background: var(--gold);
 	border: none;
 	border-radius: var(--radius);
 	cursor: pointer;
+	box-shadow: 0 6px 20px -8px rgba(251, 191, 36, 0.55);
 	transition:
 		background 0.15s ease,
+		box-shadow 0.15s ease,
 		transform 0.15s ease;
 }
 .btn:hover {
-	background: var(--accent-bright);
-	color: #06121f;
+	background: var(--gold-bright);
+	color: var(--gold-ink);
+	box-shadow: 0 8px 26px -8px rgba(251, 191, 36, 0.7);
 	text-decoration: none;
 }
 .btn:active {
