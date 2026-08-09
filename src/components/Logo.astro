@@ -1,8 +1,10 @@
 ---
-// The Weekend Dugout signal mark: ascending bars (noise → signal) topped by a
-// gold dot — the one valuable signal surfaced out of the stream. Renders on a
-// transparent background so it sits on the dark UI; the favicon carries its own
-// rounded panel. Keep the geometry in sync with public/favicon.svg.
+// The Weekend Dugout mark: a green (bullish) candlestick swung as a baseball
+// bat — the candle's body is the barrel, its wick runs the bat's axis and pokes
+// past the knob, and the gold dot is the ball coming off the barrel (and ties to
+// the gold conversion color). Bat-forward: the candlestick is a wink. Renders on
+// a transparent background; the favicon carries its own rounded panel. Keep the
+// geometry in sync with public/favicon.svg.
 interface Props {
 	size?: number;
 	class?: string;
@@ -19,8 +21,12 @@ const { size = 26, class: cls = '' } = Astro.props;
 	role="img"
 	aria-label="Weekend Dugout"
 >
-	<rect x="5" y="18" width="4" height="8" rx="2" fill="#3d6ea5" />
-	<rect x="12" y="13" width="4" height="13" rx="2" fill="#4d9fff" />
-	<rect x="19" y="8" width="4" height="18" rx="2" fill="#34d399" />
-	<circle cx="24.5" cy="6.5" r="3.1" fill="#fbbf24" />
+	<g transform="rotate(34 16 16)">
+		<line x1="16" y1="1" x2="16" y2="31.4" stroke="#34d399" stroke-width="1.5" stroke-linecap="round" />
+		<path
+			d="M16,4.4 C18.2,4.4 20,6.2 20,8.8 C20,12.6 18.5,15.6 17.6,19 C17.1,21.3 16.9,22.8 17,24 C17.1,25.4 18.1,25.9 18.1,26.9 C18.1,28.1 17.1,28.8 16,28.8 C14.9,28.8 13.9,28.1 13.9,26.9 C13.9,25.9 14.9,25.4 15,24 C15.1,22.8 14.9,21.3 14.4,19 C13.5,15.6 12,12.6 12,8.8 C12,6.2 13.8,4.4 16,4.4 Z"
+			fill="#34d399"
+		/>
+	</g>
+	<circle cx="25" cy="3.8" r="2.3" fill="#fbbf24" />
 </svg>
