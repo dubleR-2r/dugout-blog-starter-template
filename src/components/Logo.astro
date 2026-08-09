@@ -1,0 +1,26 @@
+---
+// The Weekend Dugout signal mark: ascending bars (noise → signal) topped by a
+// gold dot — the one valuable signal surfaced out of the stream. Renders on a
+// transparent background so it sits on the dark UI; the favicon carries its own
+// rounded panel. Keep the geometry in sync with public/favicon.svg.
+interface Props {
+	size?: number;
+	class?: string;
+}
+const { size = 26, class: cls = '' } = Astro.props;
+---
+
+<svg
+	class={cls}
+	width={size}
+	height={size}
+	viewBox="0 0 32 32"
+	fill="none"
+	role="img"
+	aria-label="Weekend Dugout"
+>
+	<rect x="5" y="18" width="4" height="8" rx="2" fill="#3d6ea5" />
+	<rect x="12" y="13" width="4" height="13" rx="2" fill="#4d9fff" />
+	<rect x="19" y="8" width="4" height="18" rx="2" fill="#34d399" />
+	<circle cx="24.5" cy="6.5" r="3.1" fill="#fbbf24" />
+</svg>
