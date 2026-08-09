@@ -18,21 +18,22 @@ import {
 	NEWS_CADENCE,
 	FILINGS_DAYS_SHORT,
 	NEWS_DAYS_SHORT,
-	COVERAGE,
+	SEC_WATCHLIST,
+	NEWS_THEMES,
 	SITE_URL,
 } from '../consts';
 
-// Coverage math, derived so the copy can never drift from the list itself.
-const coverageCount = COVERAGE.reduce((n, group) => n + group.tickers.length, 0);
-const layerCount = COVERAGE.length;
+// Counts, derived so the copy can never drift from the lists themselves.
+const secCount = SEC_WATCHLIST.reduce((n, group) => n + group.tickers.length, 0);
+const themeCount = NEWS_THEMES.length;
 
 // Honest proof points for the hero stat strip — specifics in place of the
 // subscriber counts a new product can't yet claim.
 const proofPoints = [
-	{ stat: `${coverageCount} names`, label: `tracked across ${layerCount} layers of the AI stack` },
-	{ stat: 'Plain English', label: 'every filing summarized, not just forwarded' },
+	{ stat: `${secCount} companies`, label: 'every SEC filing scanned and decoded' },
+	{ stat: `${themeCount} themes`, label: 'news filtered by thesis, not by ticker' },
 	{ stat: 'Set schedule', label: `filings ${FILINGS_DAYS_SHORT}, news ${NEWS_DAYS_SHORT}` },
-	{ stat: 'Source-linked', label: 'every item links to the primary document' },
+	{ stat: 'Source-linked', label: 'every item links to the primary source' },
 ];
 
 // One representative brief entry for the homepage teaser. ILLUSTRATIVE — written
@@ -106,7 +107,7 @@ const faqs = [
 	},
 	{
 		q: 'What companies do you cover?',
-		a: `The AI-infrastructure supply chain — ${coverageCount} names across ${layerCount} layers, from foundry and packaging (TSM, AMKR) through memory, compute, interconnect, EDA, equipment, and the power names behind the data centers. See the full list in the “What we cover” section above. The watchlist evolves as the thesis does.`,
+		a: `Two different ways. On the SEC side we scan every filing from a fixed watchlist of ${secCount} companies — foundry and packaging (TSM, AMKR), design IP (ARM), memory, compute, EDA and equipment, plus the hyperscalers (META, MSFT) and a couple of portfolio holdings (PLTR, HOOD). The news brief isn’t ticker-locked: it’s filtered by thesis theme — power constraint, capex concentration, HBM pricing and more — so any company moving one of those stories can appear, watchlist or not. Full breakdown in “What we watch” above.`,
 	},
 	{
 		q: 'How is this different from a free filing alert?',
@@ -147,8 +148,8 @@ const faqs = [
 					<h1>The material SEC filings behind the AI trade — filtered from the noise, decoded in plain English.</h1>
 					<p class="lede">
 						Every 8-K, every material disclosure, every headline that matters — filtered for what
-						moves the AI-infrastructure supply chain, summarized in plain English, and delivered to
-						your inbox. Built by a trader who got tired of finding out last.
+						moves the AI trade, summarized in plain English, and delivered to your inbox. Built by a
+						trader who got tired of finding out last.
 					</p>
 					<div class="hero-form">
 						<SubscribeForm cta={`Start your ${TRIAL_DAYS}-day free trial`} />
@@ -218,33 +219,53 @@ const faqs = [
 			<!-- Coverage -->
 			<section id="coverage" class="band">
 				<div class="wrap">
-					<p class="eyebrow">What we cover</p>
-					<h2>{coverageCount} names across the AI-infrastructure stack.</h2>
+					<p class="eyebrow">What we watch</p>
+					<h2>One thesis, two feeds.</h2>
 					<p class="lede">
-						One thesis, tracked end to end — from the foundries that print the silicon to the grid
-						that powers the data centers. Not a firehose of every ticker; the chokepoints that
-						actually move the trade.
+						The SEC filings we scan come from a fixed watchlist. The news we surface is filtered by
+						theme — so the companies in it shift with the story, but the questions never do.
 					</p>
-					<div class="coverage-grid">
-						{
-							COVERAGE.map((group) => (
-								<article class="coverage-cell">
-									<p class="coverage-layer">
-										{group.layer}
-										{group.core && <span class="coverage-core">Core</span>}
-									</p>
-									<ul class="coverage-tickers">
-										{group.tickers.map((t) => (
-											<li>{t}</li>
-										))}
-									</ul>
-								</article>
-							))
-						}
+
+					<div class="watch-block">
+						<p class="watch-head">
+							SEC filings <span>Every filing from {secCount} companies</span>
+						</p>
+						<div class="coverage-grid">
+							{
+								SEC_WATCHLIST.map((group) => (
+									<article class="coverage-cell">
+										<p class="coverage-layer">{group.role}</p>
+										<ul class="coverage-tickers">
+											{group.tickers.map((t) => (
+												<li>{t}</li>
+											))}
+										</ul>
+									</article>
+								))
+							}
+						</div>
 					</div>
-					<p class="coverage-note">
-						Coverage evolves with the thesis. <a href="#faq">More on what and how we track →</a>
-					</p>
+
+					<div class="watch-block">
+						<p class="watch-head">
+							News briefs <span>Filtered by {themeCount} thesis themes, not by ticker</span>
+						</p>
+						<ul class="themes">
+							{
+								NEWS_THEMES.map((theme) => (
+									<li>
+										<span class="theme-name">{theme.name}</span>
+										<span class="theme-blurb">{theme.blurb}</span>
+									</li>
+								))
+							}
+						</ul>
+						<p class="coverage-note">
+							Any company that moves a theme can appear — a utility, a hyperscaler, a pipeline
+							operator — not just the watchlist. That&rsquo;s the point: the thesis is the filter,
+							not the ticker.
+						</p>
+					</div>
 				</div>
 			</section>
 
@@ -465,11 +486,32 @@ const faqs = [
 	}
 
 	/* Coverage */
+	.watch-block {
+		margin-top: 2.75rem;
+	}
+	.watch-head {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.75rem;
+		margin: 0 0 0.25rem;
+		font-size: 1.15rem;
+		font-weight: 700;
+		color: var(--text);
+	}
+	.watch-head span {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		font-weight: 400;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--text-dim);
+	}
 	.coverage-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 		gap: 1rem;
-		margin-top: 2.5rem;
+		margin-top: 1.25rem;
 	}
 	.coverage-cell {
 		padding: 1.25rem 1.4rem;
@@ -492,15 +534,6 @@ const faqs = [
 		text-transform: uppercase;
 		color: var(--text-muted);
 	}
-	.coverage-core {
-		font-family: var(--font-mono);
-		font-size: 0.6rem;
-		letter-spacing: 0.08em;
-		color: var(--signal);
-		border: 1px solid rgba(52, 211, 153, 0.35);
-		border-radius: 999px;
-		padding: 0.1rem 0.45rem;
-	}
 	.coverage-tickers {
 		display: flex;
 		flex-wrap: wrap;
@@ -519,10 +552,42 @@ const faqs = [
 		border-radius: 6px;
 		padding: 0.3rem 0.55rem;
 	}
-	.coverage-note {
-		margin: 2rem 0 0;
+	.themes {
+		list-style: none;
+		margin: 1.25rem 0 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 0.75rem;
+	}
+	.themes li {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		padding: 1rem 1.25rem;
+		background: var(--bg-panel);
+		border: 1px solid var(--border);
+		border-left: 2px solid var(--signal);
+		border-radius: 8px;
+	}
+	.theme-name {
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--accent-bright);
+	}
+	.theme-blurb {
 		font-size: 0.9rem;
+		line-height: 1.5;
+		color: var(--text-muted);
+	}
+	.coverage-note {
+		margin: 1.5rem 0 0;
+		font-size: 0.9rem;
+		line-height: 1.6;
 		color: var(--text-dim);
+		max-width: 70ch;
 	}
 
 	/* Sample teaser */
