@@ -1,10 +1,11 @@
 ---
-import { SITE_TITLE, LEGAL_ENTITY, CONTACT_EMAIL, STRIPE_PORTAL_LINK } from '../consts';
+import { SITE_TITLE, SITE_TAGLINE, LEGAL_ENTITY, CONTACT_EMAIL, STRIPE_PORTAL_LINK } from '../consts';
 const today = new Date();
 ---
 
 <footer>
 	<div class="wrap">
+		<p class="tagline">{SITE_TAGLINE}</p>
 		<div class="disclaimer">
 			<strong>{SITE_TITLE}</strong> is an informational service of {LEGAL_ENTITY}, trading as {
 				SITE_TITLE
@@ -36,6 +37,14 @@ const today = new Date();
 		border-top: 1px solid var(--border);
 		background: var(--bg-elevated);
 		padding: 3rem 0 4rem;
+	}
+	.tagline {
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--signal);
+		margin: 0 0 1.75rem;
 	}
 	.disclaimer {
 		font-size: 0.8rem;

@@ -6,6 +6,7 @@ import SubscribeForm from '../components/SubscribeForm.astro';
 import {
 	SITE_TITLE,
 	SITE_TAGLINE,
+	SITE_META_TITLE,
 	SITE_DESCRIPTION,
 	LEGAL_ENTITY,
 	PLAN_NAME,
@@ -135,11 +136,7 @@ const faqs = [
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead
-			title={`${SITE_TITLE} — ${SITE_TAGLINE}`}
-			description={SITE_DESCRIPTION}
-			schema={productSchema}
-		/>
+		<BaseHead title={SITE_META_TITLE} description={SITE_DESCRIPTION} schema={productSchema} />
 	</head>
 	<body>
 		<Header home />

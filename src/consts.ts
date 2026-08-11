@@ -2,7 +2,17 @@
 // You can import this data from anywhere in your site by using the `import` keyword.
 
 export const SITE_TITLE = "The Weekend Dugout";
-export const SITE_TAGLINE = "Intelligence for the AI Supercycle";
+
+// Brand rallying cry — the visible tagline (hero eyebrow, footer, social, og
+// image). Short and punchy on purpose; "signal" means information, not a trade
+// signal, so it stays clear of the no-advice line.
+export const SITE_TAGLINE = "Cut the noise. Hone the signal.";
+
+// Descriptive, keyword-bearing title for the <title>/og:title on the landing
+// page — SEO leans on this while the tagline carries the vibe.
+export const SITE_META_TITLE =
+	"The Weekend Dugout — SEC filings & AI-trade news, decoded";
+
 export const SITE_DESCRIPTION =
 	"Every 8-K, every material disclosure, every headline that matters — filtered, summarized in plain English, and delivered to your inbox.";
 
