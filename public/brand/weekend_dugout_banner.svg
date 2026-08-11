@@ -1,0 +1,42 @@
+<svg width="1500" height="500" viewBox="0 0 1500 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bbg" cx="46%" cy="42%" r="85%">
+      <stop offset="0%" stop-color="#16203300"/>
+      <stop offset="0%" stop-color="#172236"/>
+      <stop offset="55%" stop-color="#0f1727"/>
+      <stop offset="100%" stop-color="#070c15"/>
+    </radialGradient>
+    <linearGradient id="streak" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3ad39a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#3ad39a" stop-opacity="0.10"/>
+    </linearGradient>
+    <linearGradient id="barA2" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#33507a"/><stop offset="100%" stop-color="#436698"/></linearGradient>
+    <linearGradient id="barB2" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#3f6fb0"/><stop offset="100%" stop-color="#5488cf"/></linearGradient>
+    <linearGradient id="barC2" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#4a83c6"/><stop offset="100%" stop-color="#63a0e0"/></linearGradient>
+    <linearGradient id="bat2" x1="0.15" y1="1" x2="0.9" y2="0.05"><stop offset="0%" stop-color="#22a074"/><stop offset="50%" stop-color="#33cc95"/><stop offset="100%" stop-color="#66ecb6"/></linearGradient>
+    <linearGradient id="batShine2" x1="0" y1="1" x2="0.9" y2="0.1"><stop offset="0%" stop-color="#ffffff" stop-opacity="0"/><stop offset="72%" stop-color="#ffffff" stop-opacity="0"/><stop offset="100%" stop-color="#d6ffef" stop-opacity="0.5"/></linearGradient>
+    <radialGradient id="ball2" cx="36%" cy="30%" r="80%"><stop offset="0%" stop-color="#ffe19a"/><stop offset="55%" stop-color="#f7c34b"/><stop offset="100%" stop-color="#e6a12b"/></radialGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1500" height="500" fill="url(#bbg)"/>
+  <polygon points="900,500 1500,0 1500,500" fill="url(#streak)"/>
+
+  <!-- logo mark, no background tile so it merges into the banner -->
+  <g transform="translate(430,140) scale(0.87) translate(-150,-122)">
+    <rect x="150" y="252" width="30" height="86" rx="9" fill="url(#barA2)"/>
+    <rect x="192" y="214" width="30" height="124" rx="9" fill="url(#barB2)"/>
+    <rect x="234" y="176" width="30" height="162" rx="9" fill="url(#barC2)"/>
+    <g transform="rotate(40 300 252)">
+      <circle cx="300" cy="112" r="23" fill="url(#ball2)"/>
+      <path d="M300 140 C 320 140 326 166 322 193 C 318 233 312 286 309 320 C 308 335 310 344 313 350 C 316 356 316 365 300 367 C 284 365 284 356 287 350 C 290 344 292 335 291 320 C 288 286 282 233 278 193 C 274 166 280 140 300 140 Z" fill="url(#bat2)"/>
+      <path d="M300 140 C 320 140 326 166 322 193 C 318 233 312 286 309 320 C 308 335 310 344 313 350 C 316 356 316 365 300 367 C 284 365 284 356 287 350 C 290 344 292 335 291 320 C 288 286 282 233 278 193 C 274 166 280 140 300 140 Z" fill="url(#batShine2)"/>
+      <circle cx="300" cy="358" r="12" fill="#1f9770"/>
+    </g>
+  </g>
+
+  <!-- wordmark -->
+  <text x="706" y="212" font-family="Oswald" font-weight="500" font-size="54" letter-spacing="7" fill="#d8ecff">THE WEEKEND</text>
+  <text x="704" y="312" font-family="Oswald" font-weight="700" font-size="112" letter-spacing="2" fill="#ffffff" stroke="#ffffff" stroke-width="0.6">DUGOUT</text>
+  <rect x="708" y="330" width="342" height="4" rx="2" fill="#3ad39a" opacity="0.9"/>
+  <text x="710" y="366" font-family="Oswald" font-weight="300" font-size="25" letter-spacing="8" fill="#68d7a6">CURATED SEC FILING INTELLIGENCE</text>
+</svg>

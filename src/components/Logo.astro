@@ -1,39 +1,63 @@
 ---
-// The Weekend Dugout mark: an ascending candlestick chart (the "signal building")
-// beside a green candle swung as a baseball bat (barrel = candle body, wick down
-// the axis, gold dot = the ball off the barrel). Chart bars are blue, the bat is
-// green, the ball is gold — three clean reads: markets, the swing, the signal.
-// Wider than tall; width scales from the given height. Keep the bat/ball geometry
-// in sync with public/favicon.svg (which uses the simplified bat-only mark).
+// The Weekend Dugout mark: ascending candlestick bars (the chart) beside a green
+// candle swung as a baseball bat with a gold ball off the barrel. Extracted from
+// the brand banner (weekend_dugout_banner.svg): gradient bars, a shine highlight
+// on the bat, a radial-gradient ball, and a knob. Pure vector — no font needed.
+// Wider than tall; width scales from the given height.
 interface Props {
 	size?: number;
 	class?: string;
 }
 const { size = 26, class: cls = '' } = Astro.props;
-const w = Math.round((size * 44) / 32);
+const w = Math.round((size * 244) / 210);
 ---
 
 <svg
 	class={cls}
 	width={w}
 	height={size}
-	viewBox="0 0 44 32"
+	viewBox="422.5 130 244 210"
 	fill="none"
 	role="img"
 	aria-label="Weekend Dugout"
+	xmlns="http://www.w3.org/2000/svg"
 >
-	<!-- ascending candle bars (the chart) -->
-	<rect x="2.5" y="18.5" width="3.4" height="7.5" rx="1.7" fill="#2f5a86" />
-	<rect x="8.4" y="13.5" width="3.4" height="12.5" rx="1.7" fill="#3d78c0" />
-	<rect x="14.3" y="8.5" width="3.4" height="17.5" rx="1.7" fill="#4d9fff" />
+	<defs>
+		<linearGradient id="wdBarA" x1="0" y1="1" x2="0" y2="0">
+			<stop offset="0%" stop-color="#33507a" /><stop offset="100%" stop-color="#436698" />
+		</linearGradient>
+		<linearGradient id="wdBarB" x1="0" y1="1" x2="0" y2="0">
+			<stop offset="0%" stop-color="#3f6fb0" /><stop offset="100%" stop-color="#5488cf" />
+		</linearGradient>
+		<linearGradient id="wdBarC" x1="0" y1="1" x2="0" y2="0">
+			<stop offset="0%" stop-color="#4a83c6" /><stop offset="100%" stop-color="#63a0e0" />
+		</linearGradient>
+		<linearGradient id="wdBat" x1="0.15" y1="1" x2="0.9" y2="0.05">
+			<stop offset="0%" stop-color="#22a074" /><stop offset="50%" stop-color="#33cc95" /><stop offset="100%" stop-color="#66ecb6" />
+		</linearGradient>
+		<linearGradient id="wdBatShine" x1="0" y1="1" x2="0.9" y2="0.1">
+			<stop offset="0%" stop-color="#ffffff" stop-opacity="0" /><stop offset="72%" stop-color="#ffffff" stop-opacity="0" /><stop offset="100%" stop-color="#d6ffef" stop-opacity="0.5" />
+		</linearGradient>
+		<radialGradient id="wdBall" cx="36%" cy="30%" r="80%">
+			<stop offset="0%" stop-color="#ffe19a" /><stop offset="55%" stop-color="#f7c34b" /><stop offset="100%" stop-color="#e6a12b" />
+		</radialGradient>
+	</defs>
 
-	<!-- candle swung as a bat + gold ball -->
-	<g transform="translate(13,0) rotate(34 16 16)">
-		<line x1="16" y1="1" x2="16" y2="31.4" stroke="#34d399" stroke-width="1.5" stroke-linecap="round" />
-		<path
-			d="M16,4.4 C18.2,4.4 20,6.2 20,8.8 C20,12.6 18.5,15.6 17.6,19 C17.1,21.3 16.9,22.8 17,24 C17.1,25.4 18.1,25.9 18.1,26.9 C18.1,28.1 17.1,28.8 16,28.8 C14.9,28.8 13.9,28.1 13.9,26.9 C13.9,25.9 14.9,25.4 15,24 C15.1,22.8 14.9,21.3 14.4,19 C13.5,15.6 12,12.6 12,8.8 C12,6.2 13.8,4.4 16,4.4 Z"
-			fill="#34d399"
-		/>
+	<g transform="translate(430,140) scale(0.87) translate(-150,-122)">
+		<rect x="150" y="252" width="30" height="86" rx="9" fill="url(#wdBarA)" />
+		<rect x="192" y="214" width="30" height="124" rx="9" fill="url(#wdBarB)" />
+		<rect x="234" y="176" width="30" height="162" rx="9" fill="url(#wdBarC)" />
+		<g transform="rotate(40 300 252)">
+			<circle cx="300" cy="112" r="23" fill="url(#wdBall)" />
+			<path
+				d="M300 140 C 320 140 326 166 322 193 C 318 233 312 286 309 320 C 308 335 310 344 313 350 C 316 356 316 365 300 367 C 284 365 284 356 287 350 C 290 344 292 335 291 320 C 288 286 282 233 278 193 C 274 166 280 140 300 140 Z"
+				fill="url(#wdBat)"
+			/>
+			<path
+				d="M300 140 C 320 140 326 166 322 193 C 318 233 312 286 309 320 C 308 335 310 344 313 350 C 316 356 316 365 300 367 C 284 365 284 356 287 350 C 290 344 292 335 291 320 C 288 286 282 233 278 193 C 274 166 280 140 300 140 Z"
+				fill="url(#wdBatShine)"
+			/>
+			<circle cx="300" cy="358" r="12" fill="#1f9770" />
+		</g>
 	</g>
-	<circle cx="38" cy="3.8" r="2.3" fill="#fbbf24" />
 </svg>
