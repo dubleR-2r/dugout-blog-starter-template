@@ -1,6 +1,6 @@
 ---
 import Logo from './Logo.astro';
-import { COMING_SOON, COMING_SOON_NOTICE } from '../consts';
+import { COMING_SOON, COMING_SOON_NOTICE, FREE_LABEL } from '../consts';
 
 interface Props {
 	/** The landing page uses in-page anchors; other pages link back home. */
@@ -10,7 +10,7 @@ const { home = false } = Astro.props;
 
 // While in coming-soon mode the CTA still scrolls to the signup section, but it
 // shouldn't promise a checkout that can't happen.
-const ctaLabel = COMING_SOON ? 'Coming soon' : 'Start free trial';
+const ctaLabel = COMING_SOON ? 'Coming soon' : FREE_LABEL;
 ---
 
 <header>

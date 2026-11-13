@@ -1,0 +1,112 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, UNSUBSCRIBE_ENDPOINT, STRIPE_PORTAL_LINK, CONTACT_EMAIL } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Unsubscribe — ${SITE_TITLE}`} description={`Stop receiving ${SITE_TITLE} emails.`} />
+		<meta name="robots" content="noindex" />
+	</head>
+	<body>
+		<Header />
+		<main class="wrap">
+			<article class="prose">
+				<div id="form-view">
+					<h1>Unsubscribe</h1>
+					<p>Enter the address that receives {SITE_TITLE} and we'll stop sending to it.</p>
+					<form class="unsub" method="post" action={UNSUBSCRIBE_ENDPOINT} novalidate>
+						<label class="sr-only" for="unsub-email">Email address</label>
+						<input id="unsub-email" type="email" name="email" placeholder="you@company.com" autocomplete="email" required />
+						<div class="hp" aria-hidden="true">
+							<label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+						</div>
+						<button class="btn" type="submit">Unsubscribe</button>
+						<p class="error" role="alert" hidden></p>
+					</form>
+				</div>
+				<div id="done-view" hidden>
+					<h1>You're unsubscribed.</h1>
+					<p>
+						If that address was on the list, it won't receive any more issues, and a confirmation email
+						is on its way.
+					</p>
+				</div>
+				<p class="note">
+					Paying subscribers: unsubscribing stops the emails but not billing.
+					{STRIPE_PORTAL_LINK && <>Cancel billing in <a href={STRIPE_PORTAL_LINK}>your subscription settings</a>.</>}
+					Questions? <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+				</p>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.unsub {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: 0.6rem;
+		max-width: 480px;
+		margin: 1rem 0;
+	}
+	.hp {
+		position: absolute;
+		left: -10000px;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+	}
+	.error {
+		grid-column: 1 / -1;
+		margin: 0;
+		font-size: 0.8rem;
+		color: #f87171;
+	}
+	.note {
+		font-size: 0.85rem;
+		color: var(--text-dim);
+	}
+	@media (max-width: 480px) {
+		.unsub {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
+
+<script>
+	const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	const formView = document.getElementById('form-view')!;
+	const doneView = document.getElementById('done-view')!;
+	const showDone = () => {
+		formView.hidden = true;
+		doneView.hidden = false;
+	};
+	if (new URLSearchParams(location.search).get('done')) showDone();
+
+	const form = document.querySelector<HTMLFormElement>('form.unsub')!;
+	const input = form.querySelector<HTMLInputElement>('input[type="email"]')!;
+	const error = form.querySelector<HTMLParagraphElement>('.error')!;
+	form.addEventListener('submit', async (event) => {
+		event.preventDefault();
+		const email = input.value.trim();
+		if (!EMAIL_RE.test(email)) {
+			error.textContent = 'Enter a valid email address.';
+			error.hidden = false;
+			return;
+		}
+		const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>);
+		body.set('email', email);
+		try {
+			await fetch(form.action, { method: 'POST', mode: 'no-cors', body });
+			showDone();
+		} catch {
+			error.textContent = 'Something went wrong. Please try again, or email us.';
+			error.hidden = false;
+		}
+	});
+</script>

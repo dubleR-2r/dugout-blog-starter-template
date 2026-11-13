@@ -3,7 +3,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SubscribeForm from '../components/SubscribeForm.astro';
-import { SITE_TITLE, PRICE_AMOUNT, AI_DISCLOSURE_FILINGS } from '../consts';
+import { SITE_TITLE, AI_DISCLOSURE_FILINGS, FREE_LABEL } from '../consts';
 
 // ILLUSTRATIVE CONTENT ONLY.
 // These entries demonstrate the digest's format and tagging scheme. They are
@@ -142,8 +142,8 @@ const headlines = [
 				</div>
 
 				<div class="cta">
-					<h2>Get every brief for {PRICE_AMOUNT}/mo.</h2>
-					<SubscribeForm cta="Start free trial" />
+					<h2>Get every brief free for two weeks.</h2>
+					<SubscribeForm cta={FREE_LABEL} />
 				</div>
 			</div>
 		</main>

@@ -1,0 +1,41 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, FREE_DAYS, CONTACT_EMAIL, FILINGS_CADENCE, NEWS_CADENCE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`You're in — ${SITE_TITLE}`} description={`Your ${FREE_DAYS} free days of ${SITE_TITLE} have started.`} />
+		<meta name="robots" content="noindex" />
+	</head>
+	<body>
+		<Header />
+		<main class="wrap">
+			<article class="prose">
+				<h1>You're in.</h1>
+				<p>
+					Your {FREE_DAYS} free days of {SITE_TITLE} have started. A welcome email is on its way; if you
+					don't see it in a few minutes, check Promotions or Spam and drag it to your inbox so the rest
+					follow.
+				</p>
+				<h2>What arrives, and when</h2>
+				<ul>
+					<li><strong>News Brief</strong>, {NEWS_CADENCE}, around 5:30 AM ET.</li>
+					<li><strong>Filing Digest</strong>, {FILINGS_CADENCE}, at 7:00 AM ET.</li>
+				</ul>
+				<p>
+					Two days before your free access ends, we'll email you a link to keep going. No card is on
+					file, so if you do nothing, the emails simply stop.
+				</p>
+				<p>
+					While you wait, see <a href="/sample">a sample issue</a>. Questions? Email
+					<a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+				</p>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>

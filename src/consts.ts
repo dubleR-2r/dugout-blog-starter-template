@@ -34,6 +34,19 @@ export const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/fZueVf9544gff1jfO3fYY
 // doesn't lie about how long people have before the first charge.
 export const TRIAL_DAYS = 7;
 
+// ── FREE ACCESS ─────────────────────────────────────────────────────────────
+// Email-only, no card: FREE_DAYS of full access, then readers can continue on
+// the Stripe plan above. The signup and unsubscribe forms post to Make webhooks:
+//   "Dugout Signup (free 2 weeks)"  -> adds the email to the "dugout-subscribers"
+//                                      data store, sends a welcome, notifies RJ
+//   "Dugout Unsubscribe"            -> marks the email unsubscribed
+//   "Dugout Free-Access Expiry"     -> daily: reminder 2 days before, then ends access
+// FREE_DAYS must match addDays(now; 14) in the signup scenario.
+export const FREE_DAYS = 14;
+export const FREE_LABEL = "Get 2 weeks free";
+export const SIGNUP_ENDPOINT = "https://hook.us2.make.com/jbttolhrv9iapuf6fpya2k82lj0rhioc";
+export const UNSUBSCRIBE_ENDPOINT = "https://hook.us2.make.com/yphr56vm99sb1xjjgb3451ip369cb0pm";
+
 // ── COMING SOON MODE ────────────────────────────────────────────────────────
 // Temporary. While true, the site renders normally but NO ONE CAN SIGN UP:
 // every subscribe form is disabled server-side (so the Stripe redirect can't
@@ -115,7 +128,7 @@ export const NEWS_THEMES = [
 export const LAUNCH_OFFER: { code: string; text: string; deadline: string } | null = null;
 
 // Effective date shown on the Terms of Service and Privacy Policy.
-export const EFFECTIVE_DATE = "June 1, 2026";
+export const EFFECTIVE_DATE = "November 13, 2026";
 
 // Shown wherever AI-generated filing interpretations are displayed. A filing is
 // a primary source, so the instruction is "verify against the primary source."

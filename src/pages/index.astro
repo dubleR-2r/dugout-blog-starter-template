@@ -14,7 +14,9 @@ import {
 	PRICE_INTERVAL,
 	LAUNCH_OFFER,
 	COMING_SOON,
-	TRIAL_DAYS,
+	FREE_DAYS,
+	FREE_LABEL,
+	STRIPE_PAYMENT_LINK,
 	FILINGS_CADENCE,
 	NEWS_CADENCE,
 	FILINGS_DAYS_SHORT,
@@ -104,7 +106,7 @@ const faqs = [
 	},
 	{
 		q: 'Is there a free trial?',
-		a: `Yes — every subscription starts with a ${TRIAL_DAYS}-day free trial. You add a card up front so the digest can begin immediately, but you aren’t charged until the trial ends. Cancel anytime before then and you pay nothing.`,
+		a: `Yes — ${FREE_DAYS} days free with just your email, no card. You get every News Brief and every Filing Digest. Two days before it ends we’ll email you a link to keep going for ${PRICE_AMOUNT} ${PRICE_INTERVAL}; if you don’t, the emails simply stop.`,
 	},
 	{
 		q: 'Isn’t EDGAR free?',
@@ -153,7 +155,7 @@ const faqs = [
 						trader who got tired of finding out last.
 					</p>
 					<div class="hero-form">
-						<SubscribeForm cta={`Start your ${TRIAL_DAYS}-day free trial`} />
+						<SubscribeForm cta={FREE_LABEL} />
 					</div>
 					<p class="welcome">
 						No terminal, no finance degree, no jargon. If you can read a text, you can read the
@@ -311,14 +313,14 @@ const faqs = [
 								{
 									COMING_SOON
 										? 'Sign-ups open in a few days. Pricing below is what it will be at launch.'
-										: `Start a ${TRIAL_DAYS}-day free trial. Enter your email, add a card on Stripe, and the digest starts on the next delivery — you’re not charged until the trial ends, and you can cancel anytime.`
+										: `Try it free for ${FREE_DAYS} days — just your email, no card. Every News Brief and Filing Digest starts on the next send day. Keep going for ${PRICE_AMOUNT} ${PRICE_INTERVAL}, or don’t, and the emails simply stop.`
 								}
 							</p>
-							<SubscribeForm cta="Start free trial" />
+							<SubscribeForm cta={FREE_LABEL} />
 						</div>
 						<aside class="price-card">
 							<p class="plan">{PLAN_NAME}</p>
-							<p class="trial-badge">{TRIAL_DAYS} days free</p>
+							<p class="trial-badge">{FREE_DAYS} days free, no card</p>
 							<p class="amount">then {PRICE_AMOUNT}<span>{PRICE_INTERVAL}</span></p>
 							<ul>
 								{planFeatures.map((feature) => <li>{feature}</li>)}
@@ -330,7 +332,9 @@ const faqs = [
 									</p>
 								)
 							}
-							<p class="secured">Payments handled securely by Stripe.</p>
+							<p class="secured">
+								Already sure? <a href={STRIPE_PAYMENT_LINK}>Subscribe now</a>. Payments handled securely by Stripe.
+							</p>
 						</aside>
 					</div>
 				</div>
