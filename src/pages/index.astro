@@ -31,7 +31,7 @@ const themeCount = NEWS_THEMES.length;
 // Honest proof points for the hero stat strip — specifics in place of the
 // subscriber counts a new product can't yet claim.
 const proofPoints = [
-	{ stat: `${secCount} companies`, label: 'every SEC filing scanned and decoded' },
+	{ stat: `${secCount} companies`, label: 'every 8-K, 6-K, 10-Q and 10-K, decoded' },
 	{ stat: `${themeCount} themes`, label: 'news filtered by thesis, not by ticker' },
 	{ stat: 'Set schedule', label: `filings ${FILINGS_DAYS_SHORT}, news ${NEWS_DAYS_SHORT}` },
 	{ stat: 'Source-linked', label: 'every item links to the primary source' },
@@ -72,7 +72,7 @@ const steps = [
 	{
 		n: '1',
 		title: 'Monitor',
-		body: 'Automated watchers track EDGAR filings (8-Ks, 10-Qs, 13-Fs, and more) and vetted news feeds around the clock.',
+		body: 'Automated watchers check EDGAR filings (8-Ks, 6-Ks, 10-Qs and 10-Ks) before every digest and scan vetted news feeds every weekday morning.',
 	},
 	{
 		n: '2',
@@ -112,7 +112,7 @@ const faqs = [
 	},
 	{
 		q: 'What companies do you cover?',
-		a: `Two different ways. On the SEC side we scan every filing from a fixed watchlist of ${secCount} companies — foundry and packaging (TSM, AMKR), design IP (ARM), memory, compute, EDA and equipment, plus the hyperscalers (META, MSFT) and a couple of portfolio holdings (PLTR, HOOD). The news brief isn’t ticker-locked: it’s filtered by thesis theme — power constraint, capex concentration, HBM pricing and more — so any company moving one of those stories can appear, watchlist or not. Full breakdown in “What we watch” above.`,
+		a: `Two different ways. On the SEC side we cover 8-Ks, 6-Ks, 10-Qs and 10-Ks from a fixed watchlist of ${secCount} companies — foundry and packaging (TSM, AMKR), design IP (ARM), memory, compute, EDA and equipment, plus the hyperscalers (META, MSFT) and a couple of portfolio holdings (PLTR, HOOD). The news brief isn’t ticker-locked: it’s filtered by thesis theme — power constraint, capex concentration, HBM pricing and more — so any company moving one of those stories can appear, watchlist or not. Full breakdown in “What we watch” above.`,
 	},
 	{
 		q: 'How is this different from a free filing alert?',
@@ -120,7 +120,7 @@ const faqs = [
 	},
 	{
 		q: 'How often does it arrive?',
-		a: `SEC filing summaries go out ${FILINGS_CADENCE}, and news briefs ${NEWS_CADENCE}. The monitoring runs around the clock, but delivery is on that schedule — we never guarantee timeliness, and original sources always control.`,
+		a: `SEC filing summaries go out ${FILINGS_CADENCE}, and news briefs ${NEWS_CADENCE}. Filings are checked when each digest is built, so a new filing appears in the next Tuesday or Friday issue — we never guarantee timeliness, and original sources always control.`,
 	},
 	{
 		q: 'Can I cancel?',
@@ -148,8 +148,8 @@ const faqs = [
 					<p class="eyebrow">{SITE_TAGLINE}</p>
 					<h1>The filings that move the AI trade — decoded in <span class="hl">plain English</span>.</h1>
 					<p class="lede">
-						Every 8-K, every material disclosure, every headline that matters — filtered for what
-						moves the AI trade, summarized in plain English, and delivered to your inbox. Built by a
+						Every 8-K from the 14 companies that run the AI buildout, plus the headlines that matter —
+						filtered for what moves the AI trade, summarized in plain English, and delivered to your inbox. Built by a
 						trader who got tired of finding out last.
 					</p>
 					<div class="hero-form">
@@ -194,7 +194,7 @@ const faqs = [
 						Retail traders find out when it&rsquo;s already in the price.
 					</p>
 					<p>
-						{SITE_TITLE} closes that gap with automation: continuous EDGAR monitoring, materiality filtering,
+						{SITE_TITLE} closes that gap with automation: scheduled EDGAR checks, materiality filtering,
 						and a plain-English digest that tells you what was filed, why it matters, and where to read
 						the original — plus a curated stream of market news headlines so the context arrives with
 						the catalyst.
@@ -233,7 +233,7 @@ const faqs = [
 
 					<div class="watch-block">
 						<p class="watch-head">
-							SEC filings <span>Every filing from {secCount} companies</span>
+							SEC filings <span>The key filings from {secCount} companies</span>
 						</p>
 						<div class="coverage-grid">
 							{

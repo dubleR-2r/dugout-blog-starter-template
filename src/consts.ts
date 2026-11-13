@@ -14,7 +14,7 @@ export const SITE_META_TITLE =
 	"The Weekend Dugout — SEC filings & AI-trade news, decoded";
 
 export const SITE_DESCRIPTION =
-	"Every 8-K, every material disclosure, every headline that matters — filtered, summarized in plain English, and delivered to your inbox.";
+	"Every 8-K from the 14 companies that run the AI buildout, plus the headlines that matter — filtered, summarized in plain English, and delivered to your inbox.";
 
 export const SITE_URL = "https://theweekenddugout.com";
 
@@ -72,14 +72,14 @@ export const PRICE_AMOUNT = "$4.99";
 export const PRICE_INTERVAL = "per month";
 
 // Real delivery cadence and the exact send days — keep honest and matched to the
-// actual Make schedules. The SEC-filings digest and the news brief run on
-// DIFFERENT days, so the site must not claim "daily." Update if schedules change.
+// actual Make schedules: "Morning Filing Digest" runs Tue & Fri 7:00 AM ET and
+// "News Brief" runs Mon–Fri ~5:30 AM ET (as of 2026-11-12). Update if schedules change.
 export const FILINGS_CADENCE = "twice a week (Tuesday and Friday)";
-export const NEWS_CADENCE = "three times a week (Monday, Wednesday, and Friday)";
+export const NEWS_CADENCE = "every weekday morning (Monday to Friday)";
 
 // Short-form cadence for tight spaces (chips, meta).
 export const FILINGS_DAYS_SHORT = "Tue & Fri";
-export const NEWS_DAYS_SHORT = "Mon · Wed · Fri";
+export const NEWS_DAYS_SHORT = "Mon–Fri";
 
 // SEC FILING WATCHLIST — the companies whose every filing the automation scans,
 // grouped by role. This is the REAL scan list; keep it matched to the automation
@@ -111,11 +111,8 @@ export const NEWS_THEMES = [
 // and this code discounts the FIRST PAID month once the trial converts. Set to
 // null to remove the banner and pricing callout. The code itself must exist as a
 // promotion code in Stripe, and must be valid to apply after a trial.
-export const LAUNCH_OFFER = {
-	code: "INVESTFEST26",
-	text: "After your free trial, get your first month for $1 with code INVESTFEST26",
-	deadline: "available through August 9",
-};
+// INVESTFEST26 ($1 first month) ran through August 9, 2026 and is retired.
+export const LAUNCH_OFFER: { code: string; text: string; deadline: string } | null = null;
 
 // Effective date shown on the Terms of Service and Privacy Policy.
 export const EFFECTIVE_DATE = "June 1, 2026";
